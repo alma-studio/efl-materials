@@ -1,0 +1,522 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap');
+
+  #hp-root {
+    --ink: #1B3A4B;
+    --teal: #236863;
+    --teal-dark: #17514D;
+    --sand: #F4ECDC;
+    --card: #FFFDF8;
+    --paprika: #C1502E;
+    --paprika-dark: #9C3E22;
+    --muted: #5B6B6E;
+    --line: #D9CDB2;
+    --good: #2E7D4F;
+    --good-bg: #E7F3EA;
+    --bad: #C1502E;
+    --bad-bg: #FBEBE4;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--sand);
+    background-image: radial-gradient(circle at 1px 1px, rgba(27,58,75,0.06) 1px, transparent 0);
+    background-size: 22px 22px;
+    padding: clamp(20px, 4vw, 48px);
+    border-radius: 18px;
+    max-width: 900px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+  #hp-root *, #hp-root *::before, #hp-root *::after { box-sizing: border-box; }
+
+  .hp-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-dark);
+    margin: 0 0 6px 0;
+  }
+  .hp-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.05;
+    margin: 0;
+  }
+  .hp-subtitle {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--muted);
+    font-size: clamp(14px, 1.6vw, 17px);
+    margin: 10px 0 30px 0;
+    max-width: 55ch;
+  }
+
+  .hp-section {
+    background: var(--card);
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    padding: 24px 26px;
+    margin-bottom: 22px;
+    position: relative;
+  }
+  .hp-section-tag {
+    position: absolute;
+    top: -12px;
+    left: 22px;
+    background: var(--teal);
+    color: #fdfaf2;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 5px;
+  }
+  .hp-section h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 22px;
+    margin: 8px 0 6px 0;
+  }
+  .hp-instructions {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0 0 16px 0;
+    line-height: 1.5;
+  }
+
+  .hp-wordbank {
+    background: #EAF3F1;
+    border: 1px solid #CBE0DC;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    margin-bottom: 18px;
+  }
+  .hp-wordbank b { color: var(--teal-dark); font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 11.5px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .hp-wordbank span { font-style: italic; color: var(--ink); }
+
+  /* Exercise A */
+  .hp-item {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 11px 0;
+    border-top: 1px dashed var(--line);
+    flex-wrap: wrap;
+  }
+  .hp-item:first-of-type { border-top: none; }
+  .hp-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--teal-dark);
+    flex: 0 0 auto;
+    padding-top: 2px;
+  }
+  .hp-sentence { font-size: 14.5px; line-height: 1.6; flex: 1 1 340px; }
+  .hp-blank {
+    display: inline-block;
+    width: 150px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    padding: 4px 8px;
+    border: none;
+    border-bottom: 2px solid var(--line);
+    background: transparent;
+    color: var(--ink);
+    margin: 0 2px;
+  }
+  .hp-blank:focus { outline: none; border-bottom-color: var(--teal); }
+  .hp-blank.correct { border-bottom-color: var(--good); background: var(--good-bg); }
+  .hp-blank.incorrect { border-bottom-color: var(--bad); background: var(--bad-bg); }
+  .hp-answer-reveal {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--bad);
+    display: none;
+    margin-left: 4px;
+  }
+  .hp-answer-reveal.show { display: inline; }
+
+  /* Exercise B matching */
+  .hp-match-row {
+    display: grid;
+    grid-template-columns: 1fr 150px 1fr;
+    gap: 10px;
+    align-items: center;
+    padding: 9px 0;
+    border-top: 1px dashed var(--line);
+    font-size: 14px;
+  }
+  .hp-match-row:first-of-type { border-top: none; }
+  .hp-match-select {
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1.5px solid var(--line);
+    background: #fff;
+    color: var(--ink);
+  }
+  .hp-match-select.correct { border-color: var(--good); background: var(--good-bg); }
+  .hp-match-select.incorrect { border-color: var(--bad); background: var(--bad-bg); }
+  .hp-match-def { color: var(--muted); font-size: 13.5px; }
+
+  /* Exercise C */
+  .hp-rewrite {
+    padding: 14px 0;
+    border-top: 1px dashed var(--line);
+  }
+  .hp-rewrite:first-of-type { border-top: none; }
+  .hp-rewrite-prompt { font-size: 14.5px; margin-bottom: 8px; line-height: 1.5; }
+  .hp-rewrite-prompt em { color: var(--paprika-dark); font-style: italic; }
+  .hp-textarea {
+    width: 100%;
+    min-height: 46px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    padding: 9px 11px;
+    border-radius: 8px;
+    border: 1.5px solid var(--line);
+    background: #fff;
+    color: var(--ink);
+    resize: vertical;
+  }
+  .hp-textarea:focus { outline: none; border-color: var(--teal); }
+  .hp-reveal-btn {
+    margin-top: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--teal-dark);
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .hp-reveal-btn:hover { border-color: var(--teal); }
+  .hp-sample {
+    display: none;
+    margin-top: 8px;
+    font-size: 13.5px;
+    background: #EAF3F1;
+    border-left: 3px solid var(--teal);
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    color: var(--teal-dark);
+  }
+  .hp-sample.show { display: block; }
+
+  /* Exercise D */
+  .hp-personal { padding: 12px 0; border-top: 1px dashed var(--line); }
+  .hp-personal:first-of-type { border-top: none; }
+  .hp-personal-q { font-size: 14.5px; margin-bottom: 8px; line-height: 1.5; }
+  .hp-textarea-tall { min-height: 60px; }
+  .hp-nofix {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin: -14px 0 18px 0;
+  }
+
+  /* Check buttons + score */
+  .hp-check-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .hp-btn {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 13.5px;
+    color: #fdfaf2;
+    background: var(--teal);
+    border: none;
+    border-radius: 7px;
+    padding: 9px 18px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .hp-btn:hover { background: var(--teal-dark); }
+  .hp-btn.hp-btn-secondary {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--line);
+  }
+  .hp-btn.hp-btn-secondary:hover { border-color: var(--paprika); color: var(--paprika-dark); background: transparent; }
+  .hp-score {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .hp-score b { color: var(--teal-dark); }
+
+  /* Answer key */
+  .hp-key-toggle {
+    display: block;
+    width: 100%;
+    text-align: left;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--ink);
+    background: var(--card);
+    border: 1.5px dashed var(--paprika);
+    border-radius: 12px;
+    padding: 16px 20px;
+    cursor: pointer;
+  }
+  .hp-key-toggle span { color: var(--paprika-dark); font-family: 'IBM Plex Mono', monospace; font-size: 11px; margin-left: 8px; }
+  .hp-key-panel {
+    display: none;
+    background: var(--card);
+    border: 1.5px solid var(--line);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    padding: 20px 26px 24px 26px;
+    margin-top: -2px;
+    margin-bottom: 22px;
+  }
+  .hp-key-panel.show { display: block; }
+  .hp-key-panel h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    color: var(--teal-dark);
+    margin: 16px 0 6px 0;
+  }
+  .hp-key-panel h4:first-child { margin-top: 0; }
+  .hp-key-panel p { font-size: 13.5px; line-height: 1.6; margin: 0 0 4px 0; }
+
+  @media (max-width: 620px) {
+    .hp-match-row { grid-template-columns: 1fr; }
+    .hp-blank { width: 120px; }
+  }
+</style>
+
+<div id="hp-root">
+  <p class="hp-eyebrow">Holiday vocabulary &middot; Practice</p>
+  <h1 class="hp-title">Interactive Worksheet</h1>
+  <p class="hp-subtitle">Complete each exercise below. Use "Check answers" to see how you did, or work through it out loud together.</p>
+
+  <!-- Exercise A -->
+  <div class="hp-section">
+    <div class="hp-section-tag">Exercise A</div>
+    <h2>Fill in the gap</h2>
+    <p class="hp-instructions">Complete each sentence with the correct word or phrase from the box. Change the verb form if necessary.</p>
+    <div class="hp-wordbank">
+      <b>Word bank:</b> <span>unwind &middot; much-needed break &middot; touristy &middot; breathtaking &middot; smooth &middot; delayed &middot; stuck in traffic &middot; jet-lagged &middot; according to plan</span>
+    </div>
+    <div id="hp-a-items"></div>
+    <div class="hp-check-row">
+      <button class="hp-btn" id="hp-a-check">Check answers</button>
+      <button class="hp-btn hp-btn-secondary" id="hp-a-reset">Clear</button>
+      <span class="hp-score" id="hp-a-score"></span>
+    </div>
+  </div>
+
+  <!-- Exercise B -->
+  <div class="hp-section">
+    <div class="hp-section-tag">Exercise B</div>
+    <h2>Match the expression to its meaning</h2>
+    <p class="hp-instructions">Choose the correct meaning for each expression.</p>
+    <div id="hp-b-items"></div>
+    <div class="hp-check-row">
+      <button class="hp-btn" id="hp-b-check">Check answers</button>
+      <button class="hp-btn hp-btn-secondary" id="hp-b-reset">Clear</button>
+      <span class="hp-score" id="hp-b-score"></span>
+    </div>
+  </div>
+
+  <!-- Exercise C -->
+  <div class="hp-section">
+    <div class="hp-section-tag">Exercise C</div>
+    <h2>Rewrite in your own words</h2>
+    <p class="hp-instructions">Rewrite each sentence using the expression in brackets. Keep the same meaning.</p>
+    <div id="hp-c-items"></div>
+  </div>
+
+  <!-- Exercise D -->
+  <div class="hp-section">
+    <div class="hp-section-tag">Exercise D</div>
+    <h2>Make it personal</h2>
+    <p class="hp-instructions">Answer the questions using at least one target expression in each answer.</p>
+    <p class="hp-nofix">There's no single correct answer here &mdash; just practice using the expressions naturally.</p>
+    <div id="hp-d-items"></div>
+  </div>
+
+  <button class="hp-key-toggle" id="hp-key-toggle">Teacher answer key <span>(click to show / hide)</span></button>
+  <div class="hp-key-panel" id="hp-key-panel">
+    <h4>Exercise A</h4>
+    <p>1. much-needed break &nbsp; 2. breathtaking &nbsp; 3. unwind &nbsp; 4. delayed &nbsp; 5. jet-lagged</p>
+    <p>6. touristy &nbsp; 7. smooth &nbsp; 8. stuck in traffic &nbsp; 9. according to plan</p>
+    <h4>Exercise B</h4>
+    <p>1 &ndash; c &nbsp; 2 &ndash; a &nbsp; 3 &ndash; d &nbsp; 4 &ndash; e &nbsp; 5 &ndash; b</p>
+    <h4>Exercise C &mdash; sample answers</h4>
+    <p>1. I was bombarded with emails when I got back to work.</p>
+    <p>2. We hadn't planned the trip in detail, but everything went according to plan.</p>
+    <p>3. It took me a few days to unwind / switch off.</p>
+    <p>4. The town felt very touristy &mdash; not many locals around.</p>
+    <h4>Exercise D</h4>
+    <p>No fixed answers &mdash; check that the target expression is used correctly and the meaning is preserved.</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  // ---------- Exercise A ----------
+  const A = [
+    { before: "After such a busy year at work, this trip was a", after: "for both of us.", answers: ["much-needed break", "a much-needed break", "much needed break"] },
+    { before: "The view from the mountain was absolutely", after: "\u2014 we just stood there for ten minutes.", answers: ["breathtaking", "stunning"] },
+    { before: "We chose a quiet spot by the sea, perfect to", after: "after a long year.", answers: ["unwind", "switch off", "recharge"] },
+    { before: "Our flight was", after: "by two hours, so we missed the connecting bus.", answers: ["delayed"] },
+    { before: "I spent the first two days feeling completely", after: "because of the time difference.", answers: ["jet-lagged", "jetlagged", "jet lagged"] },
+    { before: "Honestly, the main square was too", after: "for my taste \u2014 too many souvenir shops.", answers: ["touristy"] },
+    { before: "The whole journey was really", after: "\u2014 no delays, no problems at all.", answers: ["smooth"] },
+    { before: "On the way to the airport we were", after: "for almost an hour.", answers: ["stuck in traffic"] },
+    { before: "Nothing went", after: "but somehow it turned into a great story.", answers: ["according to plan"] }
+  ];
+
+  const aItemsEl = document.getElementById('hp-a-items');
+  A.forEach((item, i) => {
+    const row = document.createElement('div');
+    row.className = 'hp-item';
+    row.innerHTML =
+      '<div class="hp-num">' + (i + 1) + '.</div>' +
+      '<div class="hp-sentence">' + item.before +
+      ' <input type="text" class="hp-blank" data-idx="' + i + '" autocomplete="off" /> ' +
+      item.after + '<span class="hp-answer-reveal" data-idx="' + i + '"></span></div>';
+    aItemsEl.appendChild(row);
+  });
+
+  function normalize(s) { return s.trim().toLowerCase().replace(/\s+/g, ' '); }
+
+  document.getElementById('hp-a-check').addEventListener('click', () => {
+    let correct = 0;
+    A.forEach((item, i) => {
+      const input = aItemsEl.querySelector('input[data-idx="' + i + '"]');
+      const reveal = aItemsEl.querySelector('.hp-answer-reveal[data-idx="' + i + '"]');
+      const val = normalize(input.value);
+      const isCorrect = item.answers.some(a => normalize(a) === val);
+      input.classList.remove('correct', 'incorrect');
+      if (val === '') {
+        reveal.classList.remove('show');
+      } else if (isCorrect) {
+        input.classList.add('correct');
+        correct++;
+        reveal.classList.remove('show');
+      } else {
+        input.classList.add('incorrect');
+        reveal.textContent = '(' + item.answers[0] + ')';
+        reveal.classList.add('show');
+      }
+    });
+    document.getElementById('hp-a-score').innerHTML = '<b>' + correct + ' / ' + A.length + '</b> correct';
+  });
+
+  document.getElementById('hp-a-reset').addEventListener('click', () => {
+    aItemsEl.querySelectorAll('input').forEach(inp => { inp.value = ''; inp.classList.remove('correct', 'incorrect'); });
+    aItemsEl.querySelectorAll('.hp-answer-reveal').forEach(r => r.classList.remove('show'));
+    document.getElementById('hp-a-score').textContent = '';
+  });
+
+  // ---------- Exercise B ----------
+  const terms = [
+    "to switch off",
+    "a bumpy journey",
+    "post-holiday blues",
+    "to catch up on emails",
+    "My inbox was overflowing."
+  ];
+  const defs = [
+    { letter: 'a', text: 'a trip with problems or discomfort' },
+    { letter: 'b', text: 'I received far too many emails.' },
+    { letter: 'c', text: 'to stop thinking about work and relax' },
+    { letter: 'd', text: 'the low feeling after a holiday ends' },
+    { letter: 'e', text: 'to deal with the work that built up while you were away' }
+  ];
+  const correctB = ['c', 'a', 'd', 'e', 'b'];
+
+  const bItemsEl = document.getElementById('hp-b-items');
+  terms.forEach((term, i) => {
+    const row = document.createElement('div');
+    row.className = 'hp-match-row';
+    let options = '<option value="">Choose\u2026</option>';
+    defs.forEach(d => { options += '<option value="' + d.letter + '">' + d.letter + '.</option>'; });
+    row.innerHTML =
+      '<div>' + (i + 1) + '. ' + term + '</div>' +
+      '<select class="hp-match-select" data-idx="' + i + '">' + options + '</select>' +
+      '<div class="hp-match-def">' + defs[i].letter + '. ' + defs[i].text + '</div>';
+    bItemsEl.appendChild(row);
+  });
+
+  document.getElementById('hp-b-check').addEventListener('click', () => {
+    let correct = 0;
+    correctB.forEach((ans, i) => {
+      const sel = bItemsEl.querySelector('select[data-idx="' + i + '"]');
+      sel.classList.remove('correct', 'incorrect');
+      if (sel.value === '') return;
+      if (sel.value === ans) { sel.classList.add('correct'); correct++; }
+      else { sel.classList.add('incorrect'); }
+    });
+    document.getElementById('hp-b-score').innerHTML = '<b>' + correct + ' / ' + correctB.length + '</b> correct';
+  });
+
+  document.getElementById('hp-b-reset').addEventListener('click', () => {
+    bItemsEl.querySelectorAll('select').forEach(s => { s.value = ''; s.classList.remove('correct', 'incorrect'); });
+    document.getElementById('hp-b-score').textContent = '';
+  });
+
+  // ---------- Exercise C ----------
+  const C = [
+    { prompt: "I had far too many emails when I got back to work.", bracket: "(bombarded with)", sample: "I was bombarded with emails when I got back to work." },
+    { prompt: "We didn\u2019t plan the trip in detail, but everything worked out well.", bracket: "(according to plan)", sample: "We hadn\u2019t planned the trip in detail, but everything went according to plan." },
+    { prompt: "It took me a few days to relax and stop thinking about work.", bracket: "(unwind / switch off)", sample: "It took me a few days to unwind / switch off." },
+    { prompt: "The town felt like it was made only for tourists, not locals.", bracket: "(touristy)", sample: "The town felt very touristy \u2014 not many locals around." }
+  ];
+  const cItemsEl = document.getElementById('hp-c-items');
+  C.forEach((item, i) => {
+    const row = document.createElement('div');
+    row.className = 'hp-rewrite';
+    row.innerHTML =
+      '<div class="hp-rewrite-prompt">' + (i + 1) + '. ' + item.prompt + ' <em>' + item.bracket + '</em></div>' +
+      '<textarea class="hp-textarea" placeholder="Type your rewrite here\u2026"></textarea>' +
+      '<button class="hp-reveal-btn" data-idx="' + i + '">Show sample answer</button>' +
+      '<div class="hp-sample" data-idx="' + i + '">' + item.sample + '</div>';
+    cItemsEl.appendChild(row);
+  });
+  cItemsEl.querySelectorAll('.hp-reveal-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = btn.getAttribute('data-idx');
+      const sample = cItemsEl.querySelector('.hp-sample[data-idx="' + idx + '"]');
+      const showing = sample.classList.toggle('show');
+      btn.textContent = showing ? 'Hide sample answer' : 'Show sample answer';
+    });
+  });
+
+  // ---------- Exercise D ----------
+  const D = [
+    "What helps you feel like you\u2019ve really switched off on holiday?",
+    "Have you ever had a trip that didn\u2019t go according to plan? What happened?",
+    "Do you enjoy touristy places, or do you prefer quieter destinations? Why?",
+    "How do you usually deal with post-holiday blues?"
+  ];
+  const dItemsEl = document.getElementById('hp-d-items');
+  D.forEach((q, i) => {
+    const row = document.createElement('div');
+    row.className = 'hp-personal';
+    row.innerHTML =
+      '<div class="hp-personal-q">' + (i + 1) + '. ' + q + '</div>' +
+      '<textarea class="hp-textarea hp-textarea-tall" placeholder="Your answer\u2026"></textarea>';
+    dItemsEl.appendChild(row);
+  });
+
+  // ---------- Answer key toggle ----------
+  document.getElementById('hp-key-toggle').addEventListener('click', () => {
+    document.getElementById('hp-key-panel').classList.toggle('show');
+  });
+})();
+</script>
