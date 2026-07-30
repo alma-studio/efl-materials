@@ -1,0 +1,537 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap');
+
+  #hv-root {
+    --ink: #1B3A4B;
+    --teal: #236863;
+    --teal-dark: #17514D;
+    --sand: #F4ECDC;
+    --card: #FFFDF8;
+    --paprika: #C1502E;
+    --paprika-dark: #9C3E22;
+    --muted: #5B6B6E;
+    --line: #D9CDB2;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--sand);
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(27,58,75,0.06) 1px, transparent 0);
+    background-size: 22px 22px;
+    padding: clamp(20px, 4vw, 48px);
+    border-radius: 18px;
+    max-width: 980px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+  #hv-root *, #hv-root *::before, #hv-root *::after { box-sizing: border-box; }
+
+  .hv-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .hv-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-dark);
+    margin: 0 0 6px 0;
+  }
+  .hv-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(30px, 4.4vw, 46px);
+    line-height: 1.02;
+    margin: 0;
+    color: var(--ink);
+  }
+  .hv-subtitle {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--muted);
+    font-size: clamp(14px, 1.6vw, 17px);
+    margin: 10px 0 0 0;
+    max-width: 46ch;
+  }
+
+  /* postmark stamp */
+  .hv-postmark {
+    flex: 0 0 auto;
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    border: 2px dashed var(--paprika);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-9deg);
+    position: relative;
+    color: var(--paprika);
+  }
+  .hv-postmark::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px solid var(--paprika);
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+  .hv-postmark-text {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    text-align: center;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+  .hv-postmark-plane { width: 20px; height: 20px; margin: 0 auto 3px; display: block; }
+
+  /* tabs styled like luggage tags */
+  .hv-tabs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 28px 0 20px 0;
+  }
+  .hv-tab {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--card);
+    border: 1.5px solid var(--line);
+    border-radius: 8px 8px 8px 2px;
+    padding: 9px 16px 9px 22px;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+  .hv-tab::before {
+    content: "";
+    position: absolute;
+    left: 9px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--line);
+  }
+  .hv-tab:hover { transform: translateY(-1px); }
+  .hv-tab.active {
+    background: var(--teal);
+    border-color: var(--teal-dark);
+    color: #fff;
+  }
+  .hv-tab.active::before { background: var(--paprika); }
+
+  /* card grid */
+  .hv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .hv-card-wrap { perspective: 1200px; height: 168px; }
+  .hv-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.55s cubic-bezier(.2,.8,.3,1.1);
+  }
+  .hv-card-wrap.flipped .hv-card { transform: rotateY(180deg); }
+  .hv-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .hv-front {
+    background: var(--card);
+    border: 1.5px solid var(--line);
+    box-shadow: 3px 3px 0 rgba(27,58,75,0.07);
+  }
+  .hv-front::after {
+    content: "";
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 14px; height: 18px;
+    border: 1.5px solid var(--line);
+    background: repeating-linear-gradient(45deg, rgba(217,205,178,0.5) 0 2px, transparent 2px 4px);
+  }
+  .hv-term {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .hv-hint {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--muted);
+    margin-top: 10px;
+    letter-spacing: 0.02em;
+  }
+  .hv-back {
+    background: var(--teal);
+    color: #fdfaf2;
+    transform: rotateY(180deg);
+  }
+  .hv-back-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 8px;
+  }
+  .hv-example {
+    font-size: 14.5px;
+    line-height: 1.45;
+  }
+
+  /* speaking task / boarding pass */
+  .hv-boarding {
+    margin-top: 34px;
+    background: var(--card);
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: 1fr 230px;
+    overflow: hidden;
+  }
+  .hv-boarding-main { padding: 24px 26px; }
+  .hv-boarding-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--paprika-dark);
+    margin: 0 0 6px 0;
+  }
+  .hv-boarding-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 24px;
+    margin: 0 0 14px 0;
+  }
+  .hv-prompts { margin: 0; padding-left: 0; list-style: none; }
+  .hv-prompts li {
+    font-size: 14.5px;
+    line-height: 1.5;
+    padding: 7px 0 7px 22px;
+    position: relative;
+    border-top: 1px dashed var(--line);
+  }
+  .hv-prompts li:first-child { border-top: none; }
+  .hv-prompts li::before {
+    content: "\2708";
+    position: absolute;
+    left: 0;
+    font-size: 12px;
+    color: var(--paprika);
+  }
+
+  .hv-stub {
+    background: var(--teal);
+    color: #fdfaf2;
+    padding: 22px 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .hv-stub::before {
+    content: "";
+    position: absolute;
+    left: -9px; top: 0; bottom: 0;
+    width: 18px;
+    background-image: radial-gradient(circle, var(--sand) 6px, transparent 6.5px);
+    background-size: 18px 22px;
+    background-position: center;
+    background-repeat: repeat-y;
+  }
+  .hv-stub-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+  .hv-stub-count {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 1;
+    margin: 6px 0;
+  }
+  .hv-stub-sub { font-size: 12.5px; opacity: 0.85; }
+  .hv-stub-status {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 6px;
+    padding: 6px 8px;
+    text-align: center;
+  }
+  .hv-stub-status.ready { background: var(--paprika); border-color: var(--paprika); }
+
+  /* checklist */
+  .hv-checklist-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-top: 34px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .hv-checklist-heading h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    margin: 0;
+  }
+  .hv-reset {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .hv-reset:hover { border-color: var(--paprika); color: var(--paprika-dark); }
+
+  .hv-checklist {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .hv-check-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--card);
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    padding: 9px 12px;
+    cursor: pointer;
+    font-size: 13.5px;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .hv-check-item.checked {
+    border-color: var(--teal);
+    background: #EAF3F1;
+  }
+  .hv-check-box {
+    width: 16px; height: 16px;
+    border-radius: 4px;
+    border: 1.5px solid var(--line);
+    flex: 0 0 auto;
+    display: flex; align-items: center; justify-content: center;
+    background: #fff;
+  }
+  .hv-check-item.checked .hv-check-box { background: var(--teal); border-color: var(--teal); }
+  .hv-check-box svg { width: 10px; height: 10px; opacity: 0; }
+  .hv-check-item.checked .hv-check-box svg { opacity: 1; }
+
+  .hv-footnote {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 18px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  @media (max-width: 640px) {
+    .hv-boarding { grid-template-columns: 1fr; }
+    .hv-stub::before { display: none; }
+    .hv-hero { flex-direction: column-reverse; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hv-card { transition: none; }
+    .hv-tab { transition: none; }
+  }
+</style>
+
+<div id="hv-root">
+  <div class="hv-hero">
+    <div>
+      <p class="hv-eyebrow">Welcome back &middot; Session 7</p>
+      <h1 class="hv-title">Holiday Vocabulary</h1>
+      <p class="hv-subtitle">Tap a card to flip it and see the expression in context. Then use the tracker below while you tell your holiday story.</p>
+    </div>
+    <div class="hv-postmark">
+      <div class="hv-postmark-text">
+        <svg class="hv-postmark-plane" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12.5l19-8-6.5 9L2 12.5zM14.5 13.5L18 20l-3-3-2.2 1.5-1-4"/></svg>
+        Beyond<br/>"the beach"
+      </div>
+    </div>
+  </div>
+
+  <div class="hv-tabs" id="hv-tabs"></div>
+  <div class="hv-grid" id="hv-grid"></div>
+
+  <div class="hv-checklist-heading">
+    <h3>Speaking challenge tracker</h3>
+    <button class="hv-reset" id="hv-reset">Reset tracker</button>
+  </div>
+  <div class="hv-checklist" id="hv-checklist"></div>
+  <p class="hv-footnote">Check an expression off the moment you hear it used in the story.</p>
+
+  <div class="hv-boarding">
+    <div class="hv-boarding-main">
+      <p class="hv-boarding-eyebrow">Speaking task</p>
+      <h2 class="hv-boarding-title">The Story of My Holiday</h2>
+      <ul class="hv-prompts">
+        <li>Where did you go and why did you choose it?</li>
+        <li>What did you do there?</li>
+        <li>What was the best moment?</li>
+        <li>Did anything unexpected happen?</li>
+        <li>How did you feel coming back?</li>
+      </ul>
+    </div>
+    <div class="hv-stub">
+      <div>
+        <div class="hv-stub-label">Expressions used</div>
+        <div class="hv-stub-count" id="hv-stub-count">0<span style="font-size:20px;opacity:.6">/5</span></div>
+        <div class="hv-stub-sub">minimum for the challenge</div>
+      </div>
+      <div class="hv-stub-status" id="hv-stub-status">Keep going</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const DATA = {
+    "Describing the trip": [
+      { term: "to unwind / to recharge / to switch off", example: "It took me a few days to unwind and stop thinking about work." },
+      { term: "a much-needed break", example: "It was a much-needed break after a busy spring." },
+      { term: "touristy", example: "It was a bit too touristy for my taste." },
+      { term: "breathtaking / stunning", example: "The view from the top was absolutely breathtaking." }
+    ],
+    "Logistics & mishaps": [
+      { term: "a smooth / bumpy journey", example: "We had a bumpy journey to Greece \u2014 our flight was delayed, and then we got lost on our way to the hotel." },
+      { term: "a delayed / cancelled flight", example: "Our flight was delayed by three hours." },
+      { term: "to be stuck in traffic", example: "We were stuck in traffic for hours on the coast road." },
+      { term: "jet-lagged", example: "I was completely jet-lagged for the first two days." },
+      { term: "(not) according to plan", example: "Everything went according to plan. / Nothing went according to plan!" }
+    ],
+    "Coming back": [
+      { term: "post-holiday blues", example: "I always get the post-holiday blues on my first Monday back at work." },
+      { term: "to catch up on emails / work", example: "I spent Monday catching up on emails." },
+      { term: "My inbox was overflowing.", example: "= \u201CI was bombarded with emails\u201D \u2014 your expression!" }
+    ]
+  };
+
+  const categories = Object.keys(DATA);
+  let activeCategory = categories[0];
+  const checked = new Set();
+
+  const tabsEl = document.getElementById('hv-tabs');
+  const gridEl = document.getElementById('hv-grid');
+  const checklistEl = document.getElementById('hv-checklist');
+  const stubCount = document.getElementById('hv-stub-count');
+  const stubStatus = document.getElementById('hv-stub-status');
+
+  function allTerms() {
+    return categories.flatMap(c => DATA[c].map(item => item.term));
+  }
+
+  function renderTabs() {
+    tabsEl.innerHTML = '';
+    categories.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'hv-tab' + (cat === activeCategory ? ' active' : '');
+      btn.textContent = cat;
+      btn.addEventListener('click', () => {
+        activeCategory = cat;
+        renderTabs();
+        renderGrid();
+      });
+      tabsEl.appendChild(btn);
+    });
+  }
+
+  function renderGrid() {
+    gridEl.innerHTML = '';
+    DATA[activeCategory].forEach(item => {
+      const wrap = document.createElement('div');
+      wrap.className = 'hv-card-wrap';
+
+      const card = document.createElement('div');
+      card.className = 'hv-card';
+
+      const front = document.createElement('div');
+      front.className = 'hv-face hv-front';
+      front.innerHTML = '<div class="hv-term">' + item.term + '</div><div class="hv-hint">tap to see example \u2192</div>';
+
+      const back = document.createElement('div');
+      back.className = 'hv-face hv-back';
+      back.innerHTML = '<div class="hv-back-label">In context</div><div class="hv-example">' + item.example + '</div>';
+
+      card.appendChild(front);
+      card.appendChild(back);
+      wrap.appendChild(card);
+
+      wrap.addEventListener('click', () => wrap.classList.toggle('flipped'));
+      gridEl.appendChild(wrap);
+    });
+  }
+
+  function renderChecklist() {
+    checklistEl.innerHTML = '';
+    allTerms().forEach(term => {
+      const item = document.createElement('div');
+      item.className = 'hv-check-item' + (checked.has(term) ? ' checked' : '');
+      item.innerHTML =
+        '<span class="hv-check-box"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M4 12l6 6L20 6"/></svg></span>' +
+        '<span>' + term + '</span>';
+      item.addEventListener('click', () => {
+        if (checked.has(term)) checked.delete(term); else checked.add(term);
+        renderChecklist();
+        updateStub();
+      });
+      checklistEl.appendChild(item);
+    });
+  }
+
+  function updateStub() {
+    const n = checked.size;
+    stubCount.innerHTML = n + '<span style="font-size:20px;opacity:.6">/5</span>';
+    if (n >= 5) {
+      stubStatus.textContent = 'Challenge complete!';
+      stubStatus.classList.add('ready');
+    } else {
+      stubStatus.textContent = (5 - n) + ' more to go';
+      stubStatus.classList.remove('ready');
+    }
+  }
+
+  document.getElementById('hv-reset').addEventListener('click', () => {
+    checked.clear();
+    renderChecklist();
+    updateStub();
+  });
+
+  renderTabs();
+  renderGrid();
+  renderChecklist();
+  updateStub();
+})();
+</script>
