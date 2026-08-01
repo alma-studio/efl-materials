@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saying dates — English practice (A2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Karla:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2233;
+    --ink-soft:#5B6478;
+    --paper:#E8EDEC;
+    --card:#FFFFFF;
+    --line:#D2DBD9;
+
+    --key:#1B6B63;
+    --key-soft:#E3F0EE;
+    --alt:#8A3A5E;
+    --alt-soft:#F7E9EF;
+
+    --good:#1B7A52;
+    --good-soft:#E3F3EB;
+    --bad:#B3382C;
+    --bad-soft:#FBE8E5;
+
+    --r:14px;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:'Karla',system-ui,sans-serif;font-size:18px;line-height:1.6;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:0 20px 120px}
+
+  h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:800;line-height:1.1;margin:0}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);
+  }
+  .say{color:var(--key);font-weight:700}
+  .write{color:var(--alt);font-weight:700}
+
+  header{padding:56px 0 34px;text-align:center}
+  header h1{font-size:clamp(32px,6.5vw,50px);margin-bottom:10px}
+  header p{color:var(--ink-soft);margin:0 auto;max-width:44ch}
+
+  /* calendar */
+  .cal{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    padding:20px;margin-top:30px;
+  }
+  .cal-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+  .cal-head h2{font-size:24px}
+  .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+  .dow{
+    font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;
+    color:var(--ink-soft);text-align:center;padding-bottom:4px;
+  }
+  .day{
+    aspect-ratio:1/1;border:1px solid var(--line);background:#fff;border-radius:8px;
+    font-family:inherit;font-size:15px;color:var(--ink);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .day:hover{border-color:var(--key)}
+  .day.on{background:var(--key);border-color:var(--key);color:#fff;font-weight:700}
+  .day.empty{border:none;background:transparent;cursor:default}
+  .readout{
+    margin-top:16px;padding:14px 18px;border-radius:10px;background:var(--key-soft);
+    text-align:center;font-size:clamp(17px,3.4vw,22px);font-family:'Fraunces',serif;font-weight:600;
+    color:var(--key);min-height:58px;display:flex;align-items:center;justify-content:center;
+  }
+
+  section{margin-top:48px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+  .sec-head h2{font-size:clamp(24px,4.5vw,32px)}
+
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+  .panel + .panel{margin-top:14px}
+  .panel p{margin:8px 0}
+  .split{display:grid;gap:14px}
+  @media(min-width:660px){.split{grid-template-columns:1fr 1fr}}
+  .rule{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;border-left:6px solid var(--key)}
+  .rule.b{border-left-color:var(--alt)}
+  .rule h3{font-family:'Karla',sans-serif;font-weight:700;font-size:16px;margin-bottom:8px}
+  .rule ul{margin:0;padding-left:20px}
+  .rule li{margin:3px 0}
+
+  /* ordinal table */
+  .ords{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:8px;margin-top:6px}
+  .ord{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+  .ord b{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-soft);display:block}
+  .ord span{font-size:15px}
+  .ord.trap{border-color:var(--alt);background:var(--alt-soft)}
+
+  /* exercises */
+  .q{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px 0;border-top:1px solid var(--line)}
+  .q:first-of-type{border-top:none}
+  .num{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ink-soft);width:26px;flex:none}
+  .cue{flex:1 1 200px;min-width:0}
+  .cue b{font-family:'JetBrains Mono',monospace;font-weight:500}
+  input[type=text]{
+    font-family:inherit;font-size:17px;padding:7px 12px;border:2px solid var(--line);
+    border-radius:8px;background:#fff;color:var(--ink);width:230px;max-width:100%;
+  }
+  input[type=text]:focus{outline:none;border-color:var(--key)}
+  input.ok{border-color:var(--good);background:var(--good-soft);color:var(--good);font-weight:700}
+  input.no{border-color:var(--bad);background:var(--bad-soft)}
+  .fix{font-size:15px;color:var(--good);font-weight:700}
+  .mark{font-weight:700;width:20px;text-align:center;flex:none}
+  .mark.ok{color:var(--good)}
+  .mark.no{color:var(--bad)}
+
+  button{font-family:inherit;font-size:16px;cursor:pointer}
+  .opt{display:block;width:100%;text-align:left;border:2px solid var(--line);background:#fff;
+       border-radius:10px;padding:9px 14px;margin:6px 0;color:var(--ink)}
+  .opt:hover:not(:disabled){border-color:var(--ink)}
+  .opt.ok{background:var(--good-soft);border-color:var(--good)}
+  .opt.no{background:var(--bad-soft);border-color:var(--bad);text-decoration:line-through}
+  .opt:disabled{cursor:default}
+
+  .checkrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px}
+  .check{border:2px solid var(--ink);background:var(--ink);color:#fff;border-radius:999px;
+         padding:7px 22px;font-weight:700}
+  .check:disabled{opacity:.4;cursor:default}
+  .feedback{margin:0;font-size:15px;color:var(--ink-soft)}
+  .hint{color:var(--ink-soft);font-size:15px;margin:0 0 18px}
+
+  .scorebar{
+    position:fixed;left:0;right:0;bottom:0;background:var(--ink);color:#fff;
+    display:flex;align-items:center;justify-content:center;gap:18px;
+    padding:12px 20px;font-size:16px;flex-wrap:wrap;z-index:5;
+  }
+  .scorebar strong{font-family:'JetBrains Mono',monospace;font-weight:500}
+  .reset{background:transparent;border:1px solid rgba(255,255,255,.5);color:#fff;
+         border-radius:999px;padding:4px 16px;font-size:14px}
+  .reset:hover{background:rgba(255,255,255,.14)}
+
+  :focus-visible{outline:3px solid var(--key);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media(max-width:520px){body{font-size:17px} .day{font-size:13px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">English practice · level A2</p>
+    <h1>Saying dates</h1>
+    <p>We write <span class="write">1 August</span>, but we say <span class="say">the first of August</span>. Tap a day to hear how we say it.</p>
+
+    <div class="cal">
+      <div class="cal-head">
+        <h2>August 2026</h2>
+        <span class="eyebrow">tap a day</span>
+      </div>
+      <div class="grid" id="grid"></div>
+      <p class="readout" id="readout">Tap a day in the calendar.</p>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head">
+      <h2>The rule</h2>
+      <span class="eyebrow">write it, say it</span>
+    </div>
+    <div class="split">
+      <div class="rule b">
+        <h3>We write</h3>
+        <ul>
+          <li>1 August</li>
+          <li>3 March 2026</li>
+          <li>21 December</li>
+        </ul>
+      </div>
+      <div class="rule">
+        <h3>We say</h3>
+        <ul>
+          <li>the first of August</li>
+          <li>the third of March, twenty twenty-six</li>
+          <li>the twenty-first of December</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="panel">
+      <p><strong>Two things to remember:</strong></p>
+      <p>1. We say <span class="say">the</span> before the number and <span class="say">of</span> before the month.</p>
+      <p>2. We use <strong>on</strong> with a date: <em>My birthday is <strong>on</strong> the fifth of June.</em></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Numbers 1&ndash;31</h2>
+      <span class="eyebrow">pink = careful with the spelling</span>
+    </div>
+    <div class="ords" id="ords"></div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Years</h2>
+      <span class="eyebrow">how we say them</span>
+    </div>
+    <div class="split">
+      <div class="rule">
+        <h3>Two numbers</h3>
+        <ul>
+          <li>1985 &rarr; nineteen eighty-five</li>
+          <li>2026 &rarr; twenty twenty-six</li>
+          <li>2019 &rarr; twenty nineteen</li>
+        </ul>
+      </div>
+      <div class="rule b">
+        <h3>Careful with 2000&ndash;2009</h3>
+        <ul>
+          <li>2000 &rarr; two thousand</li>
+          <li>2005 &rarr; two thousand and five</li>
+          <li>2010 &rarr; twenty ten</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Task 1</h2>
+      <span class="eyebrow">write the word</span>
+    </div>
+    <div class="panel">
+      <p class="hint">Write the number as a word. Example: 2 &rarr; <em>second</em></p>
+      <div id="t1"></div>
+      <div class="checkrow">
+        <button class="check" id="c1" type="button">Check my answers</button>
+        <p class="feedback" id="f1" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Task 2</h2>
+      <span class="eyebrow">choose the correct sentence</span>
+    </div>
+    <div class="panel">
+      <p class="hint">Tap the sentence that is correct English.</p>
+      <div id="t2"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Task 3</h2>
+      <span class="eyebrow">say the whole date</span>
+    </div>
+    <div class="panel">
+      <p class="hint">Write the date in words. Example: 2 May &rarr; <em>the second of May</em></p>
+      <div id="t3"></div>
+      <div class="checkrow">
+        <button class="check" id="c3" type="button">Check my answers</button>
+        <p class="feedback" id="f3" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="scorebar" role="status" aria-live="polite">
+  <span>Your score: <strong id="score">0 / 24</strong></span>
+  <button class="reset" id="reset">Start again</button>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var ORD = ['','first','second','third','fourth','fifth','sixth','seventh','eighth','ninth','tenth',
+    'eleventh','twelfth','thirteenth','fourteenth','fifteenth','sixteenth','seventeenth','eighteenth',
+    'nineteenth','twentieth','twenty-first','twenty-second','twenty-third','twenty-fourth','twenty-fifth',
+    'twenty-sixth','twenty-seventh','twenty-eighth','twenty-ninth','thirtieth','thirty-first'];
+
+  var TRAPS = [5,8,9,12,20,21,30,31];
+  var TOTAL = 24, score = 0;
+  var scoreEl = document.getElementById('score');
+  function addPoint(){ score++; scoreEl.textContent = score + ' / ' + TOTAL; }
+
+  function norm(s){
+    return String(s).toLowerCase()
+      .replace(/[.,!?]/g,'')
+      .replace(/\u2019/g,"'")
+      .replace(/\s+/g,' ')
+      .trim();
+  }
+  function loose(s){ return norm(s).replace(/-/g,' ').replace(/^the /,''); }
+
+  /* ---------- calendar: August 2026 starts on Saturday ---------- */
+  var grid = document.getElementById('grid');
+  var readout = document.getElementById('readout');
+  ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(d){
+    var e = document.createElement('div'); e.className = 'dow'; e.textContent = d; grid.appendChild(e);
+  });
+  for(var b=0;b<5;b++){
+    var sp = document.createElement('div'); sp.className = 'day empty'; grid.appendChild(sp);
+  }
+  for(var d=1; d<=31; d++){
+    (function(n){
+      var btn = document.createElement('button');
+      btn.className = 'day'; btn.type = 'button'; btn.textContent = n;
+      btn.addEventListener('click', function(){
+        grid.querySelectorAll('.day.on').forEach(function(x){ x.classList.remove('on'); });
+        btn.classList.add('on');
+        readout.textContent = 'on the ' + ORD[n] + ' of August';
+      });
+      grid.appendChild(btn);
+    })(d);
+  }
+
+  /* ---------- ordinal reference ---------- */
+  var ords = document.getElementById('ords');
+  for(var i=1;i<=31;i++){
+    var cell = document.createElement('div');
+    cell.className = 'ord' + (TRAPS.indexOf(i) > -1 ? ' trap' : '');
+    cell.innerHTML = '<b>' + i + '</b><span>' + ORD[i] + '</span>';
+    ords.appendChild(cell);
+  }
+
+  /* ---------- generic typed task ---------- */
+  function buildTyped(host, items, checkBtn, feedEl){
+    var rows = [];
+    items.forEach(function(item, i){
+      var row = document.createElement('div'); row.className = 'q';
+
+      var num = document.createElement('span'); num.className = 'num'; num.textContent = (i+1);
+      var cue = document.createElement('span'); cue.className = 'cue';
+      cue.innerHTML = '<b>' + item.cue + '</b>';
+
+      var inp = document.createElement('input');
+      inp.type = 'text'; inp.setAttribute('autocomplete','off');
+      inp.setAttribute('aria-label','Answer ' + (i+1));
+      inp.placeholder = item.ph || '';
+
+      var mark = document.createElement('span'); mark.className = 'mark';
+      var fix = document.createElement('span'); fix.className = 'fix';
+
+      row.appendChild(num); row.appendChild(cue); row.appendChild(inp);
+      row.appendChild(mark); row.appendChild(fix);
+      host.appendChild(row);
+      rows.push({inp:inp, mark:mark, fix:fix, item:item});
+    });
+
+    checkBtn.addEventListener('click', function(){
+      var correct = 0;
+      rows.forEach(function(r){
+        r.inp.disabled = true;
+        var given = loose(r.inp.value);
+        var good = given !== '' && r.item.accept.some(function(a){ return loose(a) === given; });
+        if(good){
+          r.inp.classList.add('ok'); r.mark.textContent = '✓'; r.mark.className = 'mark ok';
+          correct++; addPoint();
+        } else {
+          r.inp.classList.add('no'); r.mark.textContent = '✗'; r.mark.className = 'mark no';
+          r.fix.textContent = r.item.accept[0];
+        }
+      });
+      checkBtn.disabled = true;
+      feedEl.textContent = correct === rows.length
+        ? 'All correct. ' + correct + ' / ' + rows.length
+        : correct + ' / ' + rows.length + ' correct. The green words are the answers.';
+    });
+  }
+
+  /* ---------- Task 1: ordinals ---------- */
+  var t1items = [1,3,5,8,9,12,20,21,30,31].map(function(n){
+    return { cue: n + ' →', accept: [ORD[n]], ph: 'word' };
+  });
+  buildTyped(document.getElementById('t1'), t1items,
+             document.getElementById('c1'), document.getElementById('f1'));
+
+  /* ---------- Task 2: correct sentence ---------- */
+  var t2 = [
+    ["My birthday is on the ninth of April.", "My birthday is on the nine of April.", 0],
+    ["The meeting is in 4 June.", "The meeting is on 4 June.", 1],
+    ["She starts the first of September.", "She starts on the first of September.", 1],
+    ["I was born in 1998.", "I was born on 1998.", 0],
+    ["We say: the twelfth of May.", "We say: the twelveth of May.", 0],
+    ["He arrives on the twenty-third of July.", "He arrives on the twenty-three of July.", 0]
+  ];
+  var box2 = document.getElementById('t2');
+  t2.forEach(function(item, i){
+    var row = document.createElement('div'); row.className = 'q'; row.style.display = 'block';
+    var lab = document.createElement('div'); lab.className = 'eyebrow';
+    lab.textContent = 'sentence ' + (i+1);
+    row.appendChild(lab);
+    var btns = [];
+    [0,1].forEach(function(k){
+      var b = document.createElement('button');
+      b.className = 'opt'; b.type = 'button'; b.textContent = item[k];
+      b.addEventListener('click', function(){
+        btns.forEach(function(x, idx){
+          x.disabled = true;
+          x.classList.add(idx === item[2] ? 'ok' : 'no');
+        });
+        if(k === item[2]) addPoint();
+      });
+      btns.push(b); row.appendChild(b);
+    });
+    box2.appendChild(row);
+  });
+
+  /* ---------- Task 3: full dates ---------- */
+  function dateItem(day, month){
+    var w = ORD[day];
+    return {
+      cue: day + ' ' + month + ' →',
+      ph: 'the ... of ...',
+      accept: ['the ' + w + ' of ' + month, month + ' the ' + w]
+    };
+  }
+  var t3items = [
+    dateItem(1,'August'), dateItem(4,'October'), dateItem(9,'February'),
+    dateItem(15,'June'), dateItem(22,'November'), dateItem(31,'March')
+  ];
+  buildTyped(document.getElementById('t3'), t3items,
+             document.getElementById('c3'), document.getElementById('f3'));
+
+  document.getElementById('reset').addEventListener('click', function(){ location.reload(); });
+
+})();
+</script>
+</body>
+</html>
