@@ -321,10 +321,24 @@
   var replayBtn = document.getElementById('replay');
   var lastPhrase = '';
 
+  /* Prefer warm, natural-sounding North American voices where the device has them. */
+  var VOICE_RANK = ['aria','jenny','ava','samantha','allison','google us english','zira','alex','nicky','joanna'];
+
   function pickVoice(){
     var vs = window.speechSynthesis.getVoices() || [];
-    voice = vs.filter(function(v){ return v.lang === 'en-GB'; })[0]
-         || vs.filter(function(v){ return v.lang === 'en-US'; })[0]
+    var us = vs.filter(function(v){ return /^en[-_]US/i.test(v.lang); });
+
+    us.sort(function(a,b){
+      function rank(v){
+        var n = v.name.toLowerCase();
+        for(var i=0;i<VOICE_RANK.length;i++){ if(n.indexOf(VOICE_RANK[i]) > -1) return i; }
+        return VOICE_RANK.length;
+      }
+      return rank(a) - rank(b);
+    });
+
+    voice = us[0]
+         || vs.filter(function(v){ return /^en[-_]CA/i.test(v.lang); })[0]
          || vs.filter(function(v){ return /^en/i.test(v.lang); })[0]
          || null;
   }
@@ -341,9 +355,10 @@
       window.speechSynthesis.cancel();
       var u = new SpeechSynthesisUtterance(text);
       if(voice) u.voice = voice;
-      u.lang = voice ? voice.lang : 'en-GB';
-      u.rate = 0.85;
-      u.pitch = 1;
+      u.lang = voice ? voice.lang : 'en-US';
+      u.rate = 0.95;
+      u.pitch = 1.05;
+      u.volume = 1;
       window.speechSynthesis.speak(u);
     }catch(e){ /* speech not available */ }
   }
