@@ -72,7 +72,16 @@
     margin-top:16px;padding:14px 18px;border-radius:10px;background:var(--key-soft);
     text-align:center;font-size:clamp(17px,3.4vw,22px);font-family:'Fraunces',serif;font-weight:600;
     color:var(--key);min-height:58px;display:flex;align-items:center;justify-content:center;
+    gap:14px;flex-wrap:wrap;
   }
+  .sound,.replay{
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;
+    border:1.5px solid var(--key);background:#fff;color:var(--key);
+    border-radius:999px;padding:5px 14px;white-space:nowrap;
+  }
+  .sound[aria-pressed="false"]{border-color:var(--line);color:var(--ink-soft)}
+  .sound:hover,.replay:hover{background:var(--key-soft)}
+  .day.speaking{box-shadow:0 0 0 3px var(--key-soft)}
 
   section{margin-top:48px}
   .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;flex-wrap:wrap}
@@ -150,15 +159,22 @@
   <header>
     <p class="eyebrow">English practice · level A2</p>
     <h1>Saying dates</h1>
-    <p>We write <span class="write">1 August</span>, but we say <span class="say">the first of August</span>. Tap a day to hear how we say it.</p>
+    <p>We write <span class="write">1 August</span>, but we say <span class="say">the first of August</span>. Tap a day to hear it.</p>
 
     <div class="cal">
       <div class="cal-head">
         <h2>August 2026</h2>
-        <span class="eyebrow">tap a day</span>
+        <button class="sound" id="soundBtn" type="button" aria-pressed="true">
+          <span aria-hidden="true">🔊</span> Sound on
+        </button>
       </div>
       <div class="grid" id="grid"></div>
-      <p class="readout" id="readout">Tap a day in the calendar.</p>
+      <div class="readout" id="readout">
+        <span id="readText">Tap a day in the calendar.</span>
+        <button class="replay" id="replay" type="button" hidden aria-label="Say it again">
+          <span aria-hidden="true">↻</span> Again
+        </button>
+      </div>
     </div>
   </header>
 
@@ -297,9 +313,58 @@
   }
   function loose(s){ return norm(s).replace(/-/g,' ').replace(/^the /,''); }
 
+  /* ---------- speech ---------- */
+  var canSpeak = ('speechSynthesis' in window);
+  var soundOn = true;
+  var voice = null;
+  var soundBtn = document.getElementById('soundBtn');
+  var replayBtn = document.getElementById('replay');
+  var lastPhrase = '';
+
+  function pickVoice(){
+    var vs = window.speechSynthesis.getVoices() || [];
+    voice = vs.filter(function(v){ return v.lang === 'en-GB'; })[0]
+         || vs.filter(function(v){ return v.lang === 'en-US'; })[0]
+         || vs.filter(function(v){ return /^en/i.test(v.lang); })[0]
+         || null;
+  }
+  if(canSpeak){
+    pickVoice();
+    window.speechSynthesis.onvoiceschanged = pickVoice;
+  } else {
+    soundBtn.hidden = true;
+  }
+
+  function say(text){
+    if(!canSpeak || !soundOn) return;
+    try{
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      if(voice) u.voice = voice;
+      u.lang = voice ? voice.lang : 'en-GB';
+      u.rate = 0.85;
+      u.pitch = 1;
+      window.speechSynthesis.speak(u);
+    }catch(e){ /* speech not available */ }
+  }
+
+  soundBtn.addEventListener('click', function(){
+    soundOn = !soundOn;
+    soundBtn.setAttribute('aria-pressed', String(soundOn));
+    soundBtn.innerHTML = soundOn
+      ? '<span aria-hidden="true">🔊</span> Sound on'
+      : '<span aria-hidden="true">🔇</span> Sound off';
+    if(!soundOn && canSpeak) window.speechSynthesis.cancel();
+    if(soundOn && lastPhrase) say(lastPhrase);
+  });
+
+  replayBtn.addEventListener('click', function(){
+    if(lastPhrase) say(lastPhrase);
+  });
+
   /* ---------- calendar: August 2026 starts on Saturday ---------- */
   var grid = document.getElementById('grid');
-  var readout = document.getElementById('readout');
+  var readText = document.getElementById('readText');
   ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(d){
     var e = document.createElement('div'); e.className = 'dow'; e.textContent = d; grid.appendChild(e);
   });
@@ -313,7 +378,10 @@
       btn.addEventListener('click', function(){
         grid.querySelectorAll('.day.on').forEach(function(x){ x.classList.remove('on'); });
         btn.classList.add('on');
-        readout.textContent = 'on the ' + ORD[n] + ' of August';
+        lastPhrase = 'on the ' + ORD[n] + ' of August';
+        readText.textContent = lastPhrase;
+        if(canSpeak) replayBtn.hidden = false;
+        say(lastPhrase);
       });
       grid.appendChild(btn);
     })(d);
