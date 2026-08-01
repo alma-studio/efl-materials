@@ -159,8 +159,6 @@
     padding:6px 16px;font-weight:500;
   }
   .chip.sel{border-color:var(--ink);background:var(--paper)}
-  .chip.shake{animation:shake .35s}
-  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
   .cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .col{border:2px dashed var(--line);border-radius:var(--r);padding:12px;min-height:130px}
   .col.c-in{border-color:var(--in);background:var(--in-soft)}
@@ -169,7 +167,22 @@
   .col.c-in h4{color:var(--in)}
   .col.c-on h4{color:var(--on)}
   .col ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
-  .col li{background:#fff;border-radius:999px;padding:4px 14px;font-size:16px}
+  .col li{display:flex}
+  .placed{
+    background:#fff;border:2px solid transparent;border-radius:999px;
+    padding:4px 14px;font-size:16px;font-family:inherit;color:var(--ink);
+  }
+  .placed:disabled{cursor:default}
+  .placed.right{border-color:var(--good);color:var(--good);font-weight:700}
+  .placed.wrong{border-color:var(--bad);color:var(--bad);text-decoration:line-through}
+  .placed.fixed{border-style:dashed;border-color:var(--good);color:var(--good)}
+  .checkrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:16px}
+  .feedback{margin:0;font-size:15px;color:var(--ink-soft)}
+  .showkey{
+    border:2px solid var(--ink);background:var(--ink);color:#fff;
+    border-radius:999px;padding:7px 22px;font-size:16px;font-weight:700;
+  }
+  .showkey:disabled{opacity:.4;cursor:default}
   .drop{
     width:100%;margin-top:10px;border:none;background:transparent;
     font-size:14px;color:var(--ink-soft);text-decoration:underline;padding:4px;
@@ -389,7 +402,7 @@
       <span class="eyebrow">put the words in the right box</span>
     </div>
     <div class="task">
-      <p class="hint">Tap a word, then tap the <span class="in-word">in</span> box or the <span class="on-word">on</span> box.</p>
+      <p class="hint">Tap a word, then tap the <span class="in-word">in</span> box or the <span class="on-word">on</span> box. Tap a word again to take it back. When all the words are in a box, check your answers.</p>
       <div class="pool" id="pool"></div>
       <div class="cols">
         <div class="col c-in">
@@ -402,6 +415,10 @@
           <ul id="colOn"></ul>
           <button class="drop" data-col="on">put the word here</button>
         </div>
+      </div>
+      <div class="checkrow">
+        <button class="showkey" id="checkSort" type="button">Check my answers</button>
+        <p class="feedback" id="sortFeedback" role="status" aria-live="polite"></p>
       </div>
     </div>
   </section>
@@ -509,6 +526,15 @@
   var colIn = document.getElementById('colIn');
   var colOn = document.getElementById('colOn');
   var selected = null;
+  var checked = false;
+
+  function chipSelect(){
+    if(checked) return;
+    var c = this;
+    if(selected === c){ c.classList.remove('sel'); selected = null; return; }
+    if(selected) selected.classList.remove('sel');
+    selected = c; c.classList.add('sel');
+  }
 
   words.slice().sort(function(){ return Math.random() - 0.5; }).forEach(function(w){
     var c = document.createElement('button');
@@ -516,31 +542,81 @@
     c.type = 'button';
     c.textContent = w[0];
     c.dataset.answer = w[1];
-    c.addEventListener('click', function(){
-      if(selected === c){ c.classList.remove('sel'); selected = null; return; }
-      if(selected) selected.classList.remove('sel');
-      selected = c; c.classList.add('sel');
-    });
+    c.addEventListener('click', chipSelect);
     pool.appendChild(c);
   });
 
+  function place(chip, target){
+    var li = document.createElement('li');
+    var b = document.createElement('button');
+    b.className = 'placed';
+    b.type = 'button';
+    b.textContent = chip.textContent;
+    b.dataset.answer = chip.dataset.answer;
+    b.addEventListener('click', function(){
+      if(checked) return;
+      var back = document.createElement('button');
+      back.className = 'chip';
+      back.type = 'button';
+      back.textContent = b.textContent;
+      back.dataset.answer = b.dataset.answer;
+      back.addEventListener('click', chipSelect);
+      pool.appendChild(back);
+      li.remove();
+    });
+    li.appendChild(b);
+    (target === 'in' ? colIn : colOn).appendChild(li);
+    chip.remove();
+    selected = null;
+  }
+
   document.querySelectorAll('.drop').forEach(function(btn){
     btn.addEventListener('click', function(){
-      if(!selected) return;
-      var target = btn.dataset.col;
-      if(selected.dataset.answer === target){
-        var li = document.createElement('li');
-        li.textContent = selected.textContent;
-        (target === 'in' ? colIn : colOn).appendChild(li);
-        selected.remove();
-        selected = null;
-        addPoint();
-      } else {
-        var c = selected;
-        c.classList.add('shake');
-        setTimeout(function(){ c.classList.remove('shake'); }, 400);
-      }
+      if(checked || !selected) return;
+      place(selected, btn.dataset.col);
     });
+  });
+
+  var checkBtn = document.getElementById('checkSort');
+  var feedback = document.getElementById('sortFeedback');
+
+  checkBtn.addEventListener('click', function(){
+    if(checked) return;
+
+    if(pool.querySelector('.chip')){
+      feedback.textContent = 'Put all the words in a box first.';
+      return;
+    }
+
+    checked = true;
+    var correct = 0;
+
+    [['in', colIn], ['on', colOn]].forEach(function(pair){
+      var col = pair[0];
+      pair[1].querySelectorAll('.placed').forEach(function(b){
+        b.disabled = true;
+        if(b.dataset.answer === col){
+          b.classList.add('right');
+          correct++;
+          addPoint();
+        } else {
+          b.classList.add('wrong');
+          var li = document.createElement('li');
+          var fix = document.createElement('button');
+          fix.className = 'placed fixed';
+          fix.type = 'button';
+          fix.disabled = true;
+          fix.textContent = b.textContent;
+          li.appendChild(fix);
+          (b.dataset.answer === 'in' ? colIn : colOn).appendChild(li);
+        }
+      });
+    });
+
+    checkBtn.disabled = true;
+    feedback.textContent = correct === words.length
+      ? 'All correct. ' + correct + ' / ' + words.length
+      : correct + ' / ' + words.length + ' correct. The dashed words show the right box.';
   });
 
   /* ---------------- Task 3 ---------------- */
