@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>in or on — English practice (A2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Karla:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2233;
+    --ink-soft:#5B6478;
+    --paper:#E7ECF1;
+    --card:#FFFFFF;
+    --line:#D3DAE3;
+
+    --in:#4B3FBF;
+    --in-soft:#ECEAFB;
+    --on:#A45E00;
+    --on-soft:#FBEEDA;
+
+    --good:#1B7A52;
+    --good-soft:#E3F3EB;
+    --bad:#B3382C;
+    --bad-soft:#FBE8E5;
+
+    --r:14px;
+    --maxw:860px;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Karla',system-ui,sans-serif;
+    font-size:18px;
+    line-height:1.6;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px 120px}
+
+  /* ---------- typography ---------- */
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:800;line-height:1.1;margin:0}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .in-word{color:var(--in);font-weight:700}
+  .on-word{color:var(--on);font-weight:700}
+
+  /* ---------- hero ---------- */
+  header{padding:56px 0 40px;text-align:center}
+  header h1{font-size:clamp(34px,7vw,54px);margin-bottom:10px}
+  header p{color:var(--ink-soft);margin:0 auto;max-width:42ch}
+
+  .demo{
+    display:grid;grid-template-columns:1fr 1fr;gap:16px;
+    margin:34px 0 0;
+  }
+  .demo-cell{
+    background:var(--card);border-radius:var(--r);
+    padding:26px 16px 22px;text-align:center;
+    border:1px solid var(--line);
+  }
+  .box{
+    width:130px;height:92px;margin:0 auto;
+    border:3px dashed var(--in);border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--in-soft);
+  }
+  .box span{
+    font-family:'Fraunces',serif;font-size:40px;font-weight:800;color:var(--in);
+    animation:drop .9s cubic-bezier(.2,.8,.3,1) both;
+  }
+  .surface{width:130px;height:92px;margin:0 auto;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}
+  .surface span{
+    font-family:'Fraunces',serif;font-size:40px;font-weight:800;color:var(--on);
+    line-height:1;padding-bottom:6px;
+    animation:settle .9s cubic-bezier(.2,.8,.3,1) both;
+  }
+  .surface i{display:block;width:100%;height:8px;background:var(--on);border-radius:4px}
+  .demo-cell b{display:block;margin-top:14px;font-size:15px}
+  .demo-cell small{display:block;color:var(--ink-soft);font-size:14px}
+
+  @keyframes drop{from{transform:translateY(-46px);opacity:0}to{transform:none;opacity:1}}
+  @keyframes settle{from{transform:translateY(-30px);opacity:0}to{transform:none;opacity:1}}
+
+  /* ---------- rule cards ---------- */
+  section{margin-top:48px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+  .sec-head h2{font-size:clamp(24px,4.5vw,32px)}
+
+  .rules{display:grid;gap:14px}
+  @media(min-width:660px){.rules{grid-template-columns:1fr 1fr}}
+  .rule{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    padding:18px 20px;border-left:6px solid var(--line);
+  }
+  .rule.r-in{border-left-color:var(--in)}
+  .rule.r-on{border-left-color:var(--on)}
+  .rule h3{font-family:'Karla',sans-serif;font-weight:700;font-size:16px;margin-bottom:8px}
+  .rule ul{margin:0;padding-left:20px}
+  .rule li{margin:3px 0}
+
+  .callout{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    padding:18px 20px;margin-top:14px;
+  }
+  .callout p{margin:6px 0}
+  .pair{display:flex;gap:10px;flex-wrap:wrap;align-items:baseline}
+  .pair span{white-space:nowrap}
+
+  /* ---------- exercises ---------- */
+  .task{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    padding:22px;margin-top:16px;
+  }
+  .task .hint{color:var(--ink-soft);font-size:15px;margin:0 0 18px}
+
+  .q{
+    display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+    padding:12px 0;border-top:1px solid var(--line);
+  }
+  .q:first-of-type{border-top:none}
+  .q .num{
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ink-soft);
+    width:24px;flex:none;
+  }
+  .q .txt{flex:1 1 240px;min-width:0}
+  .blank{
+    display:inline-block;min-width:52px;text-align:center;
+    border-bottom:2px solid var(--ink-soft);
+    font-weight:700;
+  }
+  .blank.filled{border-bottom-color:transparent}
+
+  .picks{display:flex;gap:8px;flex:none}
+  button{font-family:inherit;font-size:16px;cursor:pointer}
+  .pick{
+    border:2px solid var(--line);background:#fff;color:var(--ink);
+    border-radius:999px;padding:5px 18px;font-weight:700;
+    transition:background .15s,border-color .15s,color .15s;
+  }
+  .pick:hover:not(:disabled){border-color:var(--ink)}
+  .pick:disabled{cursor:default;opacity:.45}
+  .pick.chosen-ok{background:var(--good-soft);border-color:var(--good);color:var(--good);opacity:1}
+  .pick.chosen-no{background:var(--bad-soft);border-color:var(--bad);color:var(--bad);opacity:1}
+  .mark{font-weight:700;width:22px;text-align:center;flex:none}
+  .mark.ok{color:var(--good)}
+  .mark.no{color:var(--bad)}
+
+  /* sorting */
+  .pool{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;min-height:44px}
+  .chip{
+    border:2px solid var(--line);background:#fff;border-radius:999px;
+    padding:6px 16px;font-weight:500;
+  }
+  .chip.sel{border-color:var(--ink);background:var(--paper)}
+  .chip.shake{animation:shake .35s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .col{border:2px dashed var(--line);border-radius:var(--r);padding:12px;min-height:130px}
+  .col.c-in{border-color:var(--in);background:var(--in-soft)}
+  .col.c-on{border-color:var(--on);background:var(--on-soft)}
+  .col h4{margin:0 0 10px;font-family:'Fraunces',serif;font-size:22px}
+  .col.c-in h4{color:var(--in)}
+  .col.c-on h4{color:var(--on)}
+  .col ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+  .col li{background:#fff;border-radius:999px;padding:4px 14px;font-size:16px}
+  .drop{
+    width:100%;margin-top:10px;border:none;background:transparent;
+    font-size:14px;color:var(--ink-soft);text-decoration:underline;padding:4px;
+  }
+
+  /* choice pairs */
+  .opt{
+    display:block;width:100%;text-align:left;
+    border:2px solid var(--line);background:#fff;border-radius:10px;
+    padding:9px 14px;margin:6px 0;color:var(--ink);
+  }
+  .opt:hover:not(:disabled){border-color:var(--ink)}
+  .opt.ok{background:var(--good-soft);border-color:var(--good)}
+  .opt.no{background:var(--bad-soft);border-color:var(--bad);text-decoration:line-through}
+  .opt:disabled{cursor:default}
+
+  /* score bar */
+  .scorebar{
+    position:fixed;left:0;right:0;bottom:0;
+    background:var(--ink);color:#fff;
+    display:flex;align-items:center;justify-content:center;gap:18px;
+    padding:12px 20px;font-size:16px;flex-wrap:wrap;z-index:5;
+  }
+  .scorebar strong{font-family:'JetBrains Mono',monospace;font-weight:500}
+  .reset{
+    background:transparent;border:1px solid rgba(255,255,255,.5);color:#fff;
+    border-radius:999px;padding:4px 16px;font-size:14px;
+  }
+  .reset:hover{background:rgba(255,255,255,.14)}
+
+  :focus-visible{outline:3px solid var(--in);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+  }
+  @media(max-width:520px){
+    body{font-size:17px}
+    .demo{grid-template-columns:1fr}
+    .cols{grid-template-columns:1fr}
+    .q .picks{width:100%}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">English practice · level A2</p>
+    <h1><span class="in-word">in</span> or <span class="on-word">on</span>?</h1>
+    <p>Two small words, two simple pictures. Read the examples, then do the three tasks.</p>
+
+    <div class="demo">
+      <div class="demo-cell">
+        <div class="box"><span>in</span></div>
+        <b><span class="in-word">in</span> = inside something</b>
+        <small>in the box · in my bag · in the office</small>
+      </div>
+      <div class="demo-cell">
+        <div class="surface"><span>on</span><i></i></div>
+        <b><span class="on-word">on</span> = touching a surface</b>
+        <small>on the table · on the wall · on the floor</small>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head">
+      <h2 class="in-word">We use in</h2>
+      <span class="eyebrow">four common uses</span>
+    </div>
+    <div class="rules">
+      <div class="rule r-in">
+        <h3>1 · Inside a place</h3>
+        <ul>
+          <li>The milk is <span class="in-word">in</span> the fridge.</li>
+          <li>My keys are <span class="in-word">in</span> my bag.</li>
+          <li>She works <span class="in-word">in</span> an office.</li>
+        </ul>
+      </div>
+      <div class="rule r-in">
+        <h3>2 · Cities and countries</h3>
+        <ul>
+          <li>I live <span class="in-word">in</span> Bucharest.</li>
+          <li>They work <span class="in-word">in</span> Romania.</li>
+        </ul>
+      </div>
+      <div class="rule r-in">
+        <h3>3 · Months, years, seasons</h3>
+        <ul>
+          <li>My birthday is <span class="in-word">in</span> May.</li>
+          <li>He started <span class="in-word">in</span> 2019.</li>
+          <li>We travel <span class="in-word">in</span> summer.</li>
+        </ul>
+      </div>
+      <div class="rule r-in">
+        <h3>4 · Parts of the day</h3>
+        <ul>
+          <li><span class="in-word">in</span> the morning</li>
+          <li><span class="in-word">in</span> the afternoon</li>
+          <li><span class="in-word">in</span> the evening</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2 class="on-word">We use on</h2>
+      <span class="eyebrow">five common uses</span>
+    </div>
+    <div class="rules">
+      <div class="rule r-on">
+        <h3>1 · On a surface</h3>
+        <ul>
+          <li>Your book is <span class="on-word">on</span> the table.</li>
+          <li>There is a photo <span class="on-word">on</span> the wall.</li>
+          <li>The bag is <span class="on-word">on</span> the floor.</li>
+        </ul>
+      </div>
+      <div class="rule r-on">
+        <h3>2 · Days and dates</h3>
+        <ul>
+          <li>We meet <span class="on-word">on</span> Monday.</li>
+          <li>The party is <span class="on-word">on</span> 12 June.</li>
+          <li>I don't work <span class="on-word">on</span> my birthday.</li>
+        </ul>
+      </div>
+      <div class="rule r-on">
+        <h3>3 · Public transport</h3>
+        <ul>
+          <li><span class="on-word">on</span> the bus / <span class="on-word">on</span> the train</li>
+          <li><span class="on-word">on</span> a plane / <span class="on-word">on</span> a bike</li>
+          <li>But: <span class="in-word">in</span> a car / <span class="in-word">in</span> a taxi</li>
+        </ul>
+      </div>
+      <div class="rule r-on">
+        <h3>4 · Screens and lines</h3>
+        <ul>
+          <li>I saw it <span class="on-word">on</span> TV.</li>
+          <li>She is <span class="on-word">on</span> the phone.</li>
+          <li>I found it <span class="on-word">on</span> the internet.</li>
+        </ul>
+      </div>
+      <div class="rule r-on">
+        <h3>5 · Floors and sides</h3>
+        <ul>
+          <li>The office is <span class="on-word">on</span> the second floor.</li>
+          <li>The door is <span class="on-word">on</span> the left.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Careful with these</h2>
+      <span class="eyebrow">common mistakes</span>
+    </div>
+    <div class="callout">
+      <p class="pair"><span><span class="in-word">in</span> a car</span> <span>but</span> <span><span class="on-word">on</span> the bus</span></p>
+      <p class="pair"><span><span class="in-word">in</span> the morning</span> <span>but</span> <span><span class="on-word">on</span> Monday morning</span></p>
+      <p class="pair"><span><span class="in-word">in</span> the photo</span> <span>but</span> <span><span class="on-word">on</span> the wall</span></p>
+      <p class="pair"><span><span class="in-word">in</span> July</span> <span>but</span> <span><span class="on-word">on</span> 3 July</span></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Transport: <span class="on-word">on</span> the bus</h2>
+      <span class="eyebrow">big vehicles vs small vehicles</span>
+    </div>
+
+    <div class="callout">
+      <p>We use <span class="on-word">on</span> with <strong>big</strong> vehicles. You can stand up and walk in them.</p>
+      <p>We use <span class="in-word">in</span> with <strong>small</strong> vehicles. You sit down inside them.</p>
+    </div>
+
+    <div class="rules" style="margin-top:14px">
+      <div class="rule r-on">
+        <h3><span class="on-word">on</span> — big vehicles</h3>
+        <ul>
+          <li>I am <span class="on-word">on</span> the bus now.</li>
+          <li>She reads <span class="on-word">on</span> the train.</li>
+          <li>We eat <span class="on-word">on</span> the plane.</li>
+          <li>They go to work <span class="on-word">on</span> a bike.</li>
+        </ul>
+      </div>
+      <div class="rule r-in">
+        <h3><span class="in-word">in</span> — small vehicles</h3>
+        <ul>
+          <li>My bag is <span class="in-word">in</span> the car.</li>
+          <li>We go home <span class="in-word">in</span> a taxi.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p><strong>Also remember:</strong></p>
+      <p class="pair"><span>get <span class="on-word">on</span> / get <span class="on-word">off</span> the bus</span></p>
+      <p class="pair"><span>get <span class="in-word">in</span> / get <span class="in-word">out of</span> the car</span></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Task 1</h2>
+      <span class="eyebrow">choose in or on</span>
+    </div>
+    <div class="task">
+      <p class="hint">Read the sentence and tap the correct word.</p>
+      <div id="t1"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Task 2</h2>
+      <span class="eyebrow">put the words in the right box</span>
+    </div>
+    <div class="task">
+      <p class="hint">Tap a word, then tap the <span class="in-word">in</span> box or the <span class="on-word">on</span> box.</p>
+      <div class="pool" id="pool"></div>
+      <div class="cols">
+        <div class="col c-in">
+          <h4>in</h4>
+          <ul id="colIn"></ul>
+          <button class="drop" data-col="in">put the word here</button>
+        </div>
+        <div class="col c-on">
+          <h4>on</h4>
+          <ul id="colOn"></ul>
+          <button class="drop" data-col="on">put the word here</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Task 3</h2>
+      <span class="eyebrow">which sentence is correct?</span>
+    </div>
+    <div class="task">
+      <p class="hint">One sentence is right and one is wrong. Tap the correct one.</p>
+      <div id="t3"></div>
+    </div>
+  </section>
+
+</div>
+
+<div class="scorebar" role="status" aria-live="polite">
+  <span>Your score: <strong id="score">0 / 34</strong></span>
+  <button class="reset" id="reset">Start again</button>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var TOTAL = 34, score = 0;
+  var scoreEl = document.getElementById('score');
+
+  function addPoint(){ score++; scoreEl.textContent = score + ' / ' + TOTAL; }
+
+  /* ---------------- Task 1 ---------------- */
+  var t1 = [
+    ["The keys are ", " the table.", "on"],
+    ["My phone is ", " my bag.", "in"],
+    ["We have a meeting ", " Monday.", "on"],
+    ["Her birthday is ", " July.", "in"],
+    ["I go to the gym ", " the morning.", "in"],
+    ["There is a picture ", " the wall.", "on"],
+    ["She lives ", " Bucharest.", "in"],
+    ["I read the news ", " the internet.", "on"],
+    ["My brother is ", " the kitchen.", "in"],
+    ["I go to work ", " the bus.", "on"],
+    ["The film starts ", " Saturday evening.", "on"],
+    ["It is very cold ", " winter.", "in"],
+    ["Your book is ", " the floor.", "on"],
+    ["He was born ", " 2001.", "in"]
+  ];
+
+  var box1 = document.getElementById('t1');
+  t1.forEach(function(item, i){
+    var row = document.createElement('div');
+    row.className = 'q';
+
+    var num = document.createElement('span');
+    num.className = 'num';
+    num.textContent = (i+1);
+
+    var txt = document.createElement('span');
+    txt.className = 'txt';
+    var blank = document.createElement('span');
+    blank.className = 'blank';
+    blank.innerHTML = '&nbsp;&nbsp;&nbsp;';
+    txt.appendChild(document.createTextNode(item[0]));
+    txt.appendChild(blank);
+    txt.appendChild(document.createTextNode(item[1]));
+
+    var picks = document.createElement('span');
+    picks.className = 'picks';
+    var mark = document.createElement('span');
+    mark.className = 'mark';
+
+    ['in','on'].forEach(function(w){
+      var b = document.createElement('button');
+      b.className = 'pick';
+      b.type = 'button';
+      b.textContent = w;
+      b.setAttribute('aria-label', w + ', sentence ' + (i+1));
+      b.addEventListener('click', function(){
+        var right = (w === item[2]);
+        blank.textContent = w;
+        blank.className = 'blank filled ' + (item[2] === 'in' ? 'in-word' : 'on-word');
+        if(!right){ blank.textContent = item[2]; }
+        b.classList.add(right ? 'chosen-ok' : 'chosen-no');
+        mark.textContent = right ? '✓' : '✗';
+        mark.className = 'mark ' + (right ? 'ok' : 'no');
+        picks.querySelectorAll('button').forEach(function(x){ x.disabled = true; });
+        if(right) addPoint();
+      });
+      picks.appendChild(b);
+    });
+
+    row.appendChild(num); row.appendChild(txt); row.appendChild(picks); row.appendChild(mark);
+    box1.appendChild(row);
+  });
+
+  /* ---------------- Task 2 ---------------- */
+  var words = [
+    ["March","in"], ["Monday","on"], ["the table","on"], ["the morning","in"],
+    ["my birthday","on"], ["2024","in"], ["the bus","on"], ["the office","in"],
+    ["TV","on"], ["summer","in"], ["the wall","on"], ["Friday evening","on"]
+  ];
+
+  var pool = document.getElementById('pool');
+  var colIn = document.getElementById('colIn');
+  var colOn = document.getElementById('colOn');
+  var selected = null;
+
+  words.slice().sort(function(){ return Math.random() - 0.5; }).forEach(function(w){
+    var c = document.createElement('button');
+    c.className = 'chip';
+    c.type = 'button';
+    c.textContent = w[0];
+    c.dataset.answer = w[1];
+    c.addEventListener('click', function(){
+      if(selected === c){ c.classList.remove('sel'); selected = null; return; }
+      if(selected) selected.classList.remove('sel');
+      selected = c; c.classList.add('sel');
+    });
+    pool.appendChild(c);
+  });
+
+  document.querySelectorAll('.drop').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if(!selected) return;
+      var target = btn.dataset.col;
+      if(selected.dataset.answer === target){
+        var li = document.createElement('li');
+        li.textContent = selected.textContent;
+        (target === 'in' ? colIn : colOn).appendChild(li);
+        selected.remove();
+        selected = null;
+        addPoint();
+      } else {
+        var c = selected;
+        c.classList.add('shake');
+        setTimeout(function(){ c.classList.remove('shake'); }, 400);
+      }
+    });
+  });
+
+  /* ---------------- Task 3 ---------------- */
+  var t3 = [
+    ["I am on the bus.", "I am in the bus.", 0],
+    ["We meet in Tuesday.", "We meet on Tuesday.", 1],
+    ["She works in an office.", "She works on an office.", 0],
+    ["My holiday is on August.", "My holiday is in August.", 1],
+    ["The cat is on the sofa.", "The cat is in the sofa.", 0],
+    ["I watch films in TV.", "I watch films on TV.", 1],
+    ["He lives in Romania.", "He lives on Romania.", 0],
+    ["The party is in 12 June.", "The party is on 12 June.", 1]
+  ];
+
+  var box3 = document.getElementById('t3');
+  t3.forEach(function(item, i){
+    var row = document.createElement('div');
+    row.className = 'q';
+    row.style.display = 'block';
+
+    var num = document.createElement('div');
+    num.className = 'eyebrow';
+    num.textContent = 'sentence ' + (i+1);
+    row.appendChild(num);
+
+    var btns = [];
+    [0,1].forEach(function(k){
+      var b = document.createElement('button');
+      b.className = 'opt';
+      b.type = 'button';
+      b.textContent = item[k];
+      b.addEventListener('click', function(){
+        var right = (k === item[2]);
+        btns.forEach(function(x, idx){
+          x.disabled = true;
+          x.classList.add(idx === item[2] ? 'ok' : 'no');
+        });
+        if(right) addPoint();
+      });
+      btns.push(b);
+      row.appendChild(b);
+    });
+    box3.appendChild(row);
+  });
+
+  /* ---------------- reset ---------------- */
+  document.getElementById('reset').addEventListener('click', function(){
+    location.reload();
+  });
+
+})();
+</script>
+</body>
+</html>
