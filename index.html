@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Holiday Vocabulary — English Practice</title>
+<title>English Practice — Materials</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap');
-
   :root {
     --ink: #1B3A4B;
     --teal: #236863;
@@ -57,6 +56,19 @@
     margin: 0 0 40px 0;
     font-size: 16px;
   }
+  .group {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-dark);
+    margin: 0 0 12px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .group + .card { margin-top: 0; }
+  .stack { margin-bottom: 34px; }
+  .stack:last-of-type { margin-bottom: 0; }
   .card {
     display: block;
     background: var(--card);
@@ -70,6 +82,7 @@
     position: relative;
   }
   .card:hover { transform: translateY(-2px); border-color: var(--teal); }
+  .card:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
   .card-tag {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
@@ -89,6 +102,7 @@
     color: var(--muted);
     margin: 0;
     line-height: 1.5;
+    padding-right: 26px;
   }
   .card .arrow {
     position: absolute;
@@ -105,27 +119,43 @@
     color: var(--muted);
     margin-top: 30px;
   }
+  @media (prefers-reduced-motion: reduce) {
+    .card { transition: none; }
+    .card:hover { transform: none; }
+  }
 </style>
 </head>
 <body>
   <div class="wrap">
     <p class="eyebrow">Welcome back &middot; English practice</p>
-    <h1>Holiday Vocabulary</h1>
+    <h1>Our Materials</h1>
     <p class="subtitle">Pick a resource below to get started</p>
 
-    <a class="card" href="holiday_vocab_interactive.html">
-      <div class="card-tag">Vocabulary</div>
-      <h2>Interactive Handout</h2>
-      <p>Flip cards for each expression, grouped by topic, plus a live tracker for the speaking task.</p>
-      <span class="arrow">→</span>
-    </a>
+    <div class="stack">
+      <p class="group">Grammar</p>
+      <a class="card" href="in-on-worksheet.html">
+        <div class="card-tag">Prepositions &middot; A2</div>
+        <h2>in or on?</h2>
+        <p>Rules with colour-coded examples, transport, and three tasks with instant scoring.</p>
+        <span class="arrow">&rarr;</span>
+      </a>
+    </div>
 
-    <a class="card" href="holiday_practice_interactive.html">
-      <div class="card-tag">Exercises</div>
-      <h2>Practice Worksheet</h2>
-      <p>Fill-in-the-gap, matching, rewriting, and speaking questions with instant feedback.</p>
-      <span class="arrow">→</span>
-    </a>
+    <div class="stack">
+      <p class="group">Holiday Vocabulary</p>
+      <a class="card" href="holiday_vocab_interactive.html">
+        <div class="card-tag">Vocabulary</div>
+        <h2>Interactive Handout</h2>
+        <p>Flip cards for each expression, grouped by topic, plus a live tracker for the speaking task.</p>
+        <span class="arrow">&rarr;</span>
+      </a>
+      <a class="card" href="holiday_practice_interactive.html">
+        <div class="card-tag">Exercises</div>
+        <h2>Practice Worksheet</h2>
+        <p>Fill-in-the-gap, matching, rewriting, and speaking questions with instant feedback.</p>
+        <span class="arrow">&rarr;</span>
+      </a>
+    </div>
 
     <p class="footer">Made for our English lessons</p>
   </div>
