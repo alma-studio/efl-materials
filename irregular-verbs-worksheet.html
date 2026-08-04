@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Top 30 verbe neregulate — Past Simple · Alma Epifan | English 1:1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FFF4E6;
+  --navy:#16324F;
+  --orange:#FF7A3D;
+  --yellow:#FFC53D;
+  --teal:#16746B;
+  --paper:#FFFFFF;
+  --line:#E4D6C3;
+  --muted:#6B7A88;
+  --ok:#1B7A4B;
+  --err:#C0392B;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--cream);
+  color:var(--navy);
+  font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;
+  font-size:17px;
+  line-height:1.55;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 120px}
+
+/* ---------- header ---------- */
+header{
+  position:sticky;top:0;z-index:50;
+  background:var(--cream);
+  border-bottom:1px solid var(--line);
+  padding:10px 16px 8px;
+}
+.hdr-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.brand{font-family:'Fraunces',Georgia,serif;font-weight:700;font-size:15px;letter-spacing:.01em}
+.brand span{color:var(--orange)}
+.pagecount{margin-left:auto;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{height:4px;background:var(--line);border-radius:99px;margin-top:8px;max-width:720px;margin-left:auto;margin-right:auto}
+.bar i{display:block;height:100%;background:var(--orange);border-radius:99px;width:0;transition:width .3s ease}
+
+/* ---------- pages ---------- */
+.page{display:none;padding-top:26px;animation:fade .25s ease}
+.page.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.page{animation:none}*{transition:none!important}}
+
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:6px}
+h1{font-family:'Fraunces',Georgia,serif;font-size:32px;line-height:1.15;margin:0 0 10px;font-weight:700}
+h2{font-family:'Fraunces',Georgia,serif;font-size:25px;line-height:1.2;margin:0 0 8px;font-weight:700}
+h3{font-family:'Fraunces',Georgia,serif;font-size:19px;margin:22px 0 8px;font-weight:600}
+p{margin:0 0 14px}
+.lead{font-size:18px}
+.muted{color:var(--muted)}
+.small{font-size:14.5px}
+
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;margin:16px 0}
+.note{background:#FFF9EF;border-left:4px solid var(--yellow);border-radius:0 10px 10px 0;padding:12px 14px;margin:16px 0;font-size:15.5px}
+
+/* ---------- family colours ---------- */
+.fam-a{--fam:var(--navy);--famtext:#fff}
+.fam-b{--fam:var(--orange);--famtext:#fff}
+.fam-c{--fam:var(--yellow);--famtext:var(--navy)}
+.fam-d{--fam:var(--teal);--famtext:#fff}
+.fam-e{--fam:transparent;--famtext:var(--navy)}
+.dot{display:inline-block;width:12px;height:12px;border-radius:99px;background:var(--fam);border:2px solid var(--navy);vertical-align:-1px;margin-right:7px}
+.fam-a .dot,.fam-b .dot,.fam-c .dot,.fam-d .dot{border-color:transparent}
+
+/* ---------- verb table ---------- */
+.famblock{margin:20px 0}
+.famhead{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.famname{font-family:'Fraunces',serif;font-size:18px;font-weight:600}
+.famhint{font-size:14px;color:var(--muted)}
+.vrow{
+  display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:center;
+  background:var(--paper);border:1px solid var(--line);border-left:6px solid var(--fam);
+  border-radius:10px;padding:9px 12px;margin-bottom:7px;
+}
+.fam-e .vrow{border-left:6px dashed var(--navy)}
+.vbase{font-weight:600}
+.vpast{color:var(--orange);font-weight:700}
+.vro{grid-column:1/-1;font-size:13.5px;color:var(--muted);margin-top:-2px}
+.spk{
+  border:1px solid var(--line);background:var(--cream);color:var(--navy);
+  width:38px;height:38px;border-radius:99px;cursor:pointer;font-size:16px;line-height:1;
+}
+.spk:hover{background:var(--yellow)}
+
+/* ---------- buttons ---------- */
+button{font-family:inherit;font-size:16px}
+.btn{
+  background:var(--navy);color:#fff;border:none;border-radius:10px;
+  padding:11px 18px;cursor:pointer;font-weight:600;
+}
+.btn:hover{background:#1E4468}
+.btn.alt{background:var(--orange)}
+.btn.alt:hover{background:#E8672C}
+.btn.ghost{background:transparent;color:var(--navy);border:1.5px solid var(--navy)}
+.btn.ghost:hover{background:var(--paper)}
+.btn:disabled{opacity:.45;cursor:default}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+
+/* ---------- exercises ---------- */
+.chip{
+  display:inline-block;background:var(--paper);border:1.5px solid var(--navy);
+  border-radius:99px;padding:8px 15px;margin:0 7px 8px 0;cursor:pointer;font-weight:600;font-size:15.5px;
+}
+.chip.sel{background:var(--navy);color:#fff}
+.chip.done{opacity:.3;text-decoration:line-through;cursor:default}
+.boxes{display:grid;gap:10px;grid-template-columns:1fr}
+@media(min-width:560px){.boxes{grid-template-columns:1fr 1fr}}
+.box{
+  border:2px dashed var(--line);border-radius:12px;padding:12px;min-height:82px;background:var(--paper);cursor:pointer;
+}
+.box.armed{border-color:var(--orange);background:#FFF6EF}
+.boxtitle{font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center}
+.landed{display:inline-block;padding:5px 11px;border-radius:99px;margin:0 6px 6px 0;font-size:14.5px;font-weight:600;background:var(--cream);border:1px solid var(--line)}
+.landed.good{background:#E8F5EE;border-color:#8FCBA9}
+.landed.bad{background:#FBE9E7;border-color:#E3A79E}
+
+.q{border-bottom:1px solid var(--line);padding:12px 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.q:last-child{border-bottom:none}
+.q .num{color:var(--muted);font-size:14px;min-width:22px;font-variant-numeric:tabular-nums}
+.q .txt{flex:1;min-width:180px}
+input[type=text]{
+  font-family:inherit;font-size:16px;padding:8px 11px;border:1.5px solid var(--line);
+  border-radius:9px;width:150px;background:var(--paper);color:var(--navy);
+}
+input[type=text]:focus{border-color:var(--orange);outline:none}
+input.good{border-color:#7CBF9A;background:#F0FAF4}
+input.bad{border-color:#E3A79E;background:#FDF1EF}
+.fix{font-size:14px;color:var(--ok);font-weight:600}
+.fix.no{color:var(--err)}
+.score{font-family:'Fraunces',serif;font-size:17px;font-weight:600;margin-top:14px}
+
+.opt{display:block;width:100%;text-align:left;background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:11px 14px;margin-bottom:8px;cursor:pointer;font-weight:600}
+.opt:hover{border-color:var(--navy)}
+.opt.good{background:#E8F5EE;border-color:#7CBF9A}
+.opt.bad{background:#FBE9E7;border-color:#E3A79E}
+.ipa{font-family:'Source Sans 3',sans-serif;color:var(--orange);font-weight:700}
+
+/* ---------- speed round ---------- */
+.speedbox{text-align:center;padding:26px 18px}
+.bigverb{font-family:'Fraunces',serif;font-size:44px;font-weight:700;margin:6px 0 16px}
+.clock{font-family:'Fraunces',serif;font-size:30px;font-variant-numeric:tabular-nums}
+.clock.low{color:var(--err)}
+.statline{display:flex;justify-content:center;gap:26px;font-size:14px;color:var(--muted);margin-top:10px}
+
+/* ---------- speaking ---------- */
+.sent{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px}
+.sent p{margin:0 0 10px;font-size:18px}
+.sent .ro{font-size:14px;color:var(--muted);margin-bottom:10px}
+.rowbtns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.mini{border:1.5px solid var(--navy);background:transparent;color:var(--navy);border-radius:9px;padding:7px 13px;cursor:pointer;font-weight:600;font-size:14.5px}
+.mini:hover{background:var(--cream)}
+.mini.rec{border-color:var(--err);color:var(--err)}
+.mini.recording{background:var(--err);color:#fff;border-color:var(--err)}
+audio{height:36px;max-width:100%;vertical-align:middle}
+.tokenwrap{text-align:center;padding:8px 0 4px}
+.card-deck{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:26px 20px;text-align:center;min-height:190px;display:flex;flex-direction:column;justify-content:center}
+.card-deck .qtext{font-family:'Fraunces',serif;font-size:24px;line-height:1.25;margin-bottom:12px}
+.card-deck .hintverb{font-size:14px;color:var(--muted)}
+
+/* ---------- nav ---------- */
+.nav{
+  position:fixed;left:0;right:0;bottom:0;background:var(--cream);
+  border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));z-index:60;
+}
+.nav-inner{max-width:720px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.nav .btn{flex:1;text-align:center}
+footer{text-align:center;font-size:13.5px;color:var(--muted);margin-top:34px}
+footer a{color:var(--orange)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-inner">
+    <div class="brand">Alma Epifan <span>| English 1:1</span></div>
+    <div class="pagecount" id="pc">1 / 12</div>
+  </div>
+  <div class="bar"><i id="bar"></i></div>
+</header>
+
+<div class="wrap">
+
+<!-- ============ 1 ============ -->
+<section class="page on">
+  <div class="eyebrow">Past Simple</div>
+  <h1>Top 30 de verbe neregulate</h1>
+  <p class="lead">Mai întâi exersezi formele, apoi le folosești vorbind. Vorbitul e partea importantă — de aceea e la final.</p>
+
+  <div class="card">
+    <h3 style="margin-top:0">Cum funcționează</h3>
+    <p class="small"><strong>Paginile 2–8:</strong> exerciții scurte, cu verificare pe loc. Greșelile sunt normale, fac parte din proces.</p>
+    <p class="small" style="margin-bottom:0"><strong>Paginile 9–11:</strong> vorbit. Ai nevoie de microfon — apeși „Înregistrează", te asculți, mai încerci o dată.</p>
+  </div>
+
+  <div class="note">
+    <strong>Un pont:</strong> nu învăța 30 de verbe separat. Sunt doar 5 tipare. Odată ce vezi tiparul, ții minte grupul întreg.
+  </div>
+
+  <h3>Cele 5 familii</h3>
+  <div class="fam-a"><p class="small"><span class="dot"></span><strong>Nu se schimbă deloc</strong> — put, cut, read</p></div>
+  <div class="fam-b"><p class="small"><span class="dot"></span><strong>Se termină în -ought / -aught</strong> — buy, bring, think…</p></div>
+  <div class="fam-c"><p class="small"><span class="dot"></span><strong>i devine a</strong> — drink, begin, sing</p></div>
+  <div class="fam-d"><p class="small"><span class="dot"></span><strong>Se termină în -t</strong> — feel, keep, sleep…</p></div>
+  <div class="fam-e"><p class="small"><span class="dot"></span><strong>Fiecare în felul lui</strong> — fără tipar, se învață unul câte unul</p></div>
+  <p class="small muted">Culoarea familiei te urmărește peste tot în material.</p>
+</section>
+
+<!-- ============ 2 ============ -->
+<section class="page">
+  <div class="eyebrow">Pagina 2 · Referință</div>
+  <h2>Tabelul verbelor</h2>
+  <p>Apasă pe difuzor ca să auzi ambele forme. Revino la pagina asta oricând.</p>
+  <div id="table"></div>
+</section>
+
+<!-- ============ 3 ============ -->
+<section class="page">
+  <div class="eyebrow">Pagina 3 · Exercițiul 1</div>
+  <h2>Pune fiecare verb în familia lui</h2>
+  <p>Apasă pe un verb, apoi pe familia unde crezi că se potrivește. Gândește-te la <em>forma de trecut</em>, nu la infinitiv.</p>
+  <div id="sortChips" style="margin-bottom:14px"></div>
+  <div class="boxes" id="sortBoxes"></div>
+  <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+    <button class="btn" id="sortCheck">Verifică</button>
+    <button class="btn ghost" id="sortReset">Ia-o de la capăt</button>
+  </div>
+  <div class="score" id="sortScore"></div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section class="page">
+  <div class="eyebrow">Pagina 4 · Exercițiul 2</div>
+  <h2>Scrie forma de trecut</h2>
+  <p>Douăzeci de verbe. Scrie forma de Past Simple și apasă Enter.</p>
+  <div class="card" id="typeList"></div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <button class="btn" id="typeCheck">Verifică tot</button>
+    <button class="btn ghost" id="typeReset">Șterge răspunsurile</button>
+  </div>
+  <div class="score" id="typeScore"></div>
+</section>
+
+<!-- ============ 5 ============ -->
+<section class="page">
+  <div class="eyebrow">Pagina 5 · Exercițiul 3</div>
+  <h2>Completează propoziția</h2>
+  <p>Verbul din paranteză, la trecut. Aici contează contextul, nu doar forma.</p>
+  <div class="card" id="gapList"></div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <button class="btn" id="gapCheck">Verifică tot</button>
+    <button class="btn ghost" id="gapReset">Șterge răspunsurile</button>
+  </div>
+  <div class="score" id="gapScore"></div>
+</section>
+
+<!-- ============ 6 ============ -->
+<section class="page">
+  <div class="eyebrow">Pagina 6 · Exercițiul 4</div>
+  <h2>Capcane de pronunție</h2>
+  <p>Câteva verbe se scriu într-un fel și se aud complet altfel. Alege varianta corectă, apoi ascultă.</p>
+  <div id="pronList"></div>
+  <div class="note" style="margin-top:20px">
+    <strong>Ține minte:</strong> <em>bought, thought, taught, caught, brought</em> rimează toate — se termină în <span class="ipa">/ɔːt/</span>. Litera <em>gh</em> nu se aude niciodată.
+  </div>
+</section>
+
+<!-- ============ 7 ============ -->
+<section class="page">
+  <div class="eyebrow">Pagina 7 · Exercițiul 5</div>
+  <h2>Găsește greșeala</h2>
+  <p>Fiecare propoziție are o greșeală. Scrie doar forma corectă a verbului.</p>
+  <div class="card" id="errList"></div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <button class="btn" id="errCheck">Verifică tot</button>
+    <button class="btn ghost" id="errReset">Șterge răspunsurile</button>
+  </div>
+  <div class="score" id="errScore"></div>
+</section>
+
+<!-- ============ 8 ============ -->
+<section class="page">
+  <div class="eyebrow">Pagina 8 · Exercițiul 6</div>
+  <h2>Rundă rapidă</h2>
+  <p>Șaizeci de secunde. Scrie forma de trecut și apasă Enter. Câte prinzi?</p>
+  <div class="card speedbox">
+    <div class="clock" id="clock">60</div>
+    <div class="bigverb" id="speedVerb">gata?</div>
+    <input type="text" id="speedInput" placeholder="forma de trecut" autocomplete="off" autocapitalize="off" spellcheck="false" disabled style="width:200px;text-align:center">
+    <div class="statline"><span>Corecte: <strong id="sHit">0</strong></span><span>Greșite: <strong id="sMiss">0</strong></span></div>
+    <div style="margin-top:18px"><button class="btn alt" id="speedStart">Pornește</button></div>
+    <div class="score" id="speedScore"></div>
+  </div>
+  <p class="small muted">Recordul se șterge când reîncarci pagina. Scop: să bați propriul scor de data trecută.</p>
+</section>
+
+<!-- ============ 9 ============ -->
+<section class="page">
+  <div class="eyebrow">Pagina 9 · Vorbit 1</div>
+  <h2>Shadowing</h2>
+  <p>Ascultă, repetă imediat după voce, apoi înregistrează-te și compară. Nu traduce — copiază ritmul.</p>
+  <div class="note small">Prima dată ascultă <strong>rar</strong>. A doua oară, viteză normală. Repetă fiecare propoziție de 3 ori înainte să te înregistrezi.</div>
+  <div id="shadowList"></div>
+</section>
+
+<!-- ============ 10 ============ -->
+<section class="page">
+  <div class="eyebrow">Pagina 10 · Vorbit 2</div>
+  <h2>Jetoane de verbe</h2>
+  <p>Ai 6 verbe și 40 de secunde. Povestește ce ai făcut ieri și apasă pe fiecare verb pe măsură ce îl folosești. Termini când dispar toate.</p>
+  <div class="card">
+    <div class="tokenwrap">
+      <div class="clock" id="tokClock">40</div>
+      <div id="tokChips" style="margin:18px 0 6px"></div>
+      <div id="tokMsg" class="score"></div>
+    </div>
+    <div class="rowbtns" style="justify-content:center;margin-top:10px">
+      <button class="btn alt" id="tokStart">Pornește</button>
+      <button class="btn ghost" id="tokNew">Alt set de verbe</button>
+    </div>
+    <div class="rowbtns" style="justify-content:center;margin-top:12px" id="tokRec"></div>
+  </div>
+  <p class="small muted">Dacă rămâi blocată, spune propoziții simple: <em>I got up at seven. I had coffee.</em> Nu e nevoie de o poveste grozavă.</p>
+</section>
+
+<!-- ============ 11 ============ -->
+<section class="page">
+  <div class="eyebrow">Pagina 11 · Vorbit 3</div>
+  <h2>Când ai făcut ultima dată…?</h2>
+  <p>Răspunde cu voce tare, minim trei propoziții. Prima propoziție spune <em>când</em>, următoarele spun <em>ce s-a întâmplat</em>.</p>
+  <div class="card-deck">
+    <div class="qtext" id="cardQ">Apasă „Următoarea" ca să începi.</div>
+    <div class="hintverb" id="cardHint"></div>
+  </div>
+  <div class="rowbtns" style="margin-top:14px">
+    <button class="btn alt" id="cardNext">Următoarea întrebare</button>
+    <button class="mini" id="cardSay">🔊 Ascultă întrebarea</button>
+  </div>
+  <div class="rowbtns" style="margin-top:12px" id="cardRec"></div>
+  <div class="note small" style="margin-top:20px">
+    Model de răspuns: <em>I last bought something expensive in March. I bought a new phone because my old one broke. It cost more than I planned.</em>
+  </div>
+</section>
+
+<!-- ============ 12 ============ -->
+<section class="page">
+  <div class="eyebrow">Ai ajuns la capăt</div>
+  <h2>Ce să faci mai departe</h2>
+  <p>Formele se învață repede. Ce durează e să-ți vină automat când vorbești — și asta se antrenează doar vorbind.</p>
+  <div class="card">
+    <h3 style="margin-top:0">Trei lucruri de făcut săptămâna asta</h3>
+    <p class="small"><strong>1.</strong> Rundă rapidă (pagina 8), o dată pe zi, 60 de secunde. Atât.</p>
+    <p class="small"><strong>2.</strong> Seara, spune cu voce tare trei lucruri pe care le-ai făcut peste zi. În engleză, la trecut.</p>
+    <p class="small" style="margin-bottom:0"><strong>3.</strong> Revino la pagina 10 cu alt set de verbe și înregistrează-te din nou. Compară cu prima înregistrare.</p>
+  </div>
+  <div class="note">Ai o întrebare la vreun exercițiu? Scrie-mi și o luăm împreună la ședința următoare.</div>
+  <footer>
+    <strong>Alma Epifan | English 1:1</strong><br>
+    <a href="https://almaepifan.ro/">almaepifan.ro</a>
+  </footer>
+</section>
+
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <button class="btn ghost" id="prev">← Înapoi</button>
+    <button class="btn" id="next">Mai departe →</button>
+  </div>
+</nav>
+
+<script>
+/* ================= DATE ================= */
+const VERBS=[
+ // fam: a = fara schimbare, b = -ought/-aught, c = i>a, d = -t, e = fara tipar
+ {b:'put',p:'put',ro:'a pune',f:'a'},
+ {b:'cut',p:'cut',ro:'a tăia',f:'a'},
+ {b:'read',p:'read',ro:'a citi',f:'a'},
+
+ {b:'buy',p:'bought',ro:'a cumpăra',f:'b'},
+ {b:'bring',p:'brought',ro:'a aduce',f:'b'},
+ {b:'think',p:'thought',ro:'a (se) gândi',f:'b'},
+ {b:'teach',p:'taught',ro:'a preda, a învăța pe cineva',f:'b'},
+ {b:'catch',p:'caught',ro:'a prinde',f:'b'},
+
+ {b:'drink',p:'drank',ro:'a bea',f:'c'},
+ {b:'begin',p:'began',ro:'a începe',f:'c'},
+ {b:'sing',p:'sang',ro:'a cânta',f:'c'},
+
+ {b:'feel',p:'felt',ro:'a simți',f:'d'},
+ {b:'keep',p:'kept',ro:'a păstra',f:'d'},
+ {b:'sleep',p:'slept',ro:'a dormi',f:'d'},
+ {b:'meet',p:'met',ro:'a (se) întâlni',f:'d'},
+ {b:'leave',p:'left',ro:'a pleca, a lăsa',f:'d'},
+ {b:'mean',p:'meant',ro:'a însemna',f:'d'},
+
+ {b:'be',p:'was / were',ro:'a fi',f:'e',alt:['was','were','was/were']},
+ {b:'have',p:'had',ro:'a avea',f:'e'},
+ {b:'do',p:'did',ro:'a face',f:'e'},
+ {b:'go',p:'went',ro:'a merge',f:'e'},
+ {b:'get',p:'got',ro:'a primi, a obține',f:'e'},
+ {b:'make',p:'made',ro:'a face, a fabrica',f:'e'},
+ {b:'say',p:'said',ro:'a spune',f:'e'},
+ {b:'take',p:'took',ro:'a lua',f:'e'},
+ {b:'come',p:'came',ro:'a veni',f:'e'},
+ {b:'see',p:'saw',ro:'a vedea',f:'e'},
+ {b:'know',p:'knew',ro:'a ști, a cunoaște',f:'e'},
+ {b:'give',p:'gave',ro:'a da',f:'e'},
+ {b:'tell',p:'told',ro:'a spune cuiva',f:'e'}
+];
+const FAMS={
+ a:{name:'Nu se schimbă',hint:'aceeași formă',cls:'fam-a'},
+ b:{name:'-ought / -aught',hint:'sunet /ɔːt/',cls:'fam-b'},
+ c:{name:'i → a',hint:'se schimbă vocala',cls:'fam-c'},
+ d:{name:'Se termină în -t',hint:'felt, kept, slept…',cls:'fam-d'},
+ e:{name:'Fiecare în felul lui',hint:'fără tipar',cls:'fam-e'}
+};
+
+/* ================= NAVIGARE ================= */
+const pages=[...document.querySelectorAll('.page')];
+let cur=0;
+function show(i){
+  cur=Math.max(0,Math.min(pages.length-1,i));
+  pages.forEach((p,k)=>p.classList.toggle('on',k===cur));
+  document.getElementById('pc').textContent=(cur+1)+' / '+pages.length;
+  document.getElementById('bar').style.width=((cur+1)/pages.length*100)+'%';
+  document.getElementById('prev').disabled=cur===0;
+  document.getElementById('next').disabled=cur===pages.length-1;
+  window.scrollTo({top:0,behavior:'instant'});
+  stopAll();
+}
+document.getElementById('prev').onclick=()=>show(cur-1);
+document.getElementById('next').onclick=()=>show(cur+1);
+
+/* ================= AUDIO (TTS) ================= */
+let voice=null;
+function pickVoice(){
+  const v=speechSynthesis.getVoices();
+  voice = v.find(x=>x.lang==='en-US'&&/natural|aria|jenny|guy/i.test(x.name))
+       || v.find(x=>x.lang==='en-US')
+       || v.find(x=>x.lang&&x.lang.startsWith('en'))||null;
+}
+if('speechSynthesis' in window){ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; }
+function speak(text,rate){
+  if(!('speechSynthesis' in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='en-US'; u.rate=rate||0.95; if(voice)u.voice=voice;
+  speechSynthesis.speak(u);
+}
+function stopAll(){
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  stopSpeed(); stopTokens();
+}
+const norm=s=>(s||'').trim().toLowerCase().replace(/\s+/g,' ');
+function isRight(input,v){
+  const a=norm(input);
+  if(v.alt)return v.alt.includes(a.replace(/\s*\/\s*/,'/'))||v.alt.includes(a);
+  return a===norm(v.p);
+}
+
+/* ================= P2 TABEL ================= */
+(function(){
+  const host=document.getElementById('table');
+  Object.keys(FAMS).forEach(f=>{
+    const block=document.createElement('div');
+    block.className='famblock '+FAMS[f].cls;
+    block.innerHTML='<div class="famhead"><span class="dot"></span><span class="famname">'+FAMS[f].name+
+      '</span><span class="famhint">'+FAMS[f].hint+'</span></div>';
+    VERBS.filter(v=>v.f===f).forEach(v=>{
+      const r=document.createElement('div');
+      r.className='vrow';
+      r.innerHTML='<div class="vbase">'+v.b+'</div><div class="vpast">'+v.p+'</div>'+
+        '<button class="spk" aria-label="Ascultă '+v.b+'">🔊</button>'+
+        '<div class="vro">'+v.ro+'</div>';
+      r.querySelector('.spk').onclick=()=>speak(v.b+', '+v.p.replace('/',' or '),0.8);
+      block.appendChild(r);
+    });
+    host.appendChild(block);
+  });
+})();
+
+/* ================= P3 SORTARE ================= */
+const SORT=['buy','sleep','put','drink','think','leave','cut','teach','begin','keep','bring','meet','read','sing','catch','feel','mean','catch'].filter((v,i,a)=>a.indexOf(v)===i);
+let armed=null;
+(function(){
+  const chips=document.getElementById('sortChips'),boxes=document.getElementById('sortBoxes');
+  function build(){
+    chips.innerHTML='';boxes.innerHTML='';armed=null;
+    document.getElementById('sortScore').textContent='';
+    SORT.forEach(b=>{
+      const c=document.createElement('button');
+      c.className='chip';c.textContent=b;c.dataset.v=b;
+      c.onclick=()=>{
+        if(c.classList.contains('done'))return;
+        chips.querySelectorAll('.chip').forEach(x=>x.classList.remove('sel'));
+        c.classList.add('sel');armed=c;
+        boxes.querySelectorAll('.box').forEach(x=>x.classList.add('armed'));
+      };
+      chips.appendChild(c);
+    });
+    ['a','b','c','d'].forEach(f=>{
+      const bx=document.createElement('div');
+      bx.className='box '+FAMS[f].cls;bx.dataset.f=f;
+      bx.innerHTML='<div class="boxtitle"><span class="dot"></span>'+FAMS[f].name+'</div><div class="drop"></div>';
+      bx.onclick=()=>{
+        if(!armed)return;
+        const tag=document.createElement('span');
+        tag.className='landed';tag.textContent=armed.dataset.v;tag.dataset.v=armed.dataset.v;
+        bx.querySelector('.drop').appendChild(tag);
+        armed.classList.add('done');armed.classList.remove('sel');armed=null;
+        boxes.querySelectorAll('.box').forEach(x=>x.classList.remove('armed'));
+      };
+      boxes.appendChild(bx);
+    });
+  }
+  document.getElementById('sortReset').onclick=build;
+  document.getElementById('sortCheck').onclick=()=>{
+    let ok=0,tot=0;
+    boxes.querySelectorAll('.box').forEach(bx=>{
+      bx.querySelectorAll('.landed').forEach(t=>{
+        tot++;
+        const v=VERBS.find(x=>x.b===t.dataset.v);
+        const good=v&&v.f===bx.dataset.f;
+        t.classList.toggle('good',good);t.classList.toggle('bad',!good);
+        if(good)ok++; else t.textContent=t.dataset.v+' → '+(v?v.p:'');
+      });
+    });
+    document.getElementById('sortScore').textContent=
+      tot===0?'Nu ai pus încă niciun verb.':ok+' din '+tot+' corect'+(ok===1?'':'e')+
+      (ok===SORT.length?' — perfect, ai prins tiparele.':'');
+  };
+  build();
+})();
+
+/* ================= P4 SCRIE FORMA ================= */
+const TYPE=['go','buy','sleep','say','think','take','leave','come','teach','get','meet','drink','see','bring','keep','know','put','feel','give','tell'];
+function inputRow(host,items,checkBtn,resetBtn,scoreEl,render,verify){
+  const rows=[];
+  items.forEach((it,i)=>{
+    const row=document.createElement('div');row.className='q';
+    row.innerHTML='<span class="num">'+(i+1)+'.</span>';
+    const txt=document.createElement('span');txt.className='txt';txt.innerHTML=render(it);
+    const inp=document.createElement('input');inp.type='text';inp.autocomplete='off';
+    inp.spellcheck=false;inp.setAttribute('autocapitalize','off');
+    const fb=document.createElement('span');fb.className='fix';
+    inp.addEventListener('keydown',e=>{if(e.key==='Enter'){one(it,inp,fb);const n=rows[i+1];if(n)n.focus();}});
+    row.appendChild(txt);row.appendChild(inp);row.appendChild(fb);
+    host.appendChild(row);rows.push(inp);
+    inp._it=it;inp._fb=fb;
+  });
+  function one(it,inp,fb){
+    const good=verify(it,inp.value);
+    inp.classList.toggle('good',good);inp.classList.toggle('bad',!good);
+    fb.className='fix'+(good?'':' no');
+    fb.textContent=good?'✓':'→ '+(it.answer||it);
+    return good;
+  }
+  checkBtn.onclick=()=>{
+    let ok=0;
+    rows.forEach(inp=>{if(inp.value.trim()&&one(inp._it,inp,inp._fb))ok++;else if(!inp.value.trim()){inp.classList.remove('good');inp.classList.add('bad');inp._fb.className='fix no';inp._fb.textContent='→ '+(inp._it.answer||inp._it);}});
+    scoreEl.textContent=ok+' din '+rows.length+' corecte.'+(ok===rows.length?' Toate. Bravo.':'');
+  };
+  resetBtn.onclick=()=>{
+    rows.forEach(inp=>{inp.value='';inp.className='';inp._fb.textContent='';});
+    scoreEl.textContent='';
+  };
+}
+(function(){
+  const items=TYPE.map(b=>{const v=VERBS.find(x=>x.b===b);return {b:b,answer:v.p,v:v};});
+  inputRow(document.getElementById('typeList'),items,
+    document.getElementById('typeCheck'),document.getElementById('typeReset'),
+    document.getElementById('typeScore'),
+    it=>'<strong>'+it.b+'</strong> <span class="muted small">'+it.v.ro+'</span>',
+    (it,val)=>isRight(val,it.v));
+})();
+
+/* ================= P5 COMPLETEAZĂ ================= */
+const GAP=[
+ {s:'Yesterday I ___ to the office at eight.',v:'go',answer:'went'},
+ {s:'She ___ she needed more time.',v:'say',answer:'said'},
+ {s:'We ___ a long meeting on Monday.',v:'have',answer:'had'},
+ {s:'I ___ a new laptop last month.',v:'buy',answer:'bought'},
+ {s:'They ___ the documents this morning.',v:'bring',answer:'brought'},
+ {s:'He ___ me how to use the system.',v:'teach',answer:'taught'},
+ {s:'I ___ badly before the interview.',v:'sleep',answer:'slept'},
+ {s:'We ___ the new team last week.',v:'meet',answer:'met'},
+ {s:'She ___ the office early on Friday.',v:'leave',answer:'left'},
+ {s:'I ___ your email yesterday evening.',v:'read',answer:'read'}
+];
+(function(){
+  inputRow(document.getElementById('gapList'),GAP,
+    document.getElementById('gapCheck'),document.getElementById('gapReset'),
+    document.getElementById('gapScore'),
+    it=>it.s.replace(/___/g,'<strong style="color:var(--orange)">___</strong>')+' <span class="muted small">('+it.v+')</span>',
+    (it,val)=>norm(val).replace(/[,.]/g,'')===norm(it.answer).replace(/[,.]/g,''));
+})();
+
+/* ================= P6 PRONUNȚIE ================= */
+const PRON=[
+ {q:'She <strong>said</strong> yes.',a:['/sed/ — rimează cu „red"','/seɪd/ — rimează cu „made"'],c:0,say:'She said yes.'},
+ {q:'I <strong>read</strong> your email yesterday.',a:['/red/ — la trecut se citește „red"','/riːd/ — la fel ca la prezent'],c:0,say:'I read your email yesterday.'},
+ {q:'He <strong>bought</strong> a coffee.',a:['/bɔːt/ — „gh" nu se aude','/bɔːgt/ — se aude un g'],c:0,say:'He bought a coffee.'},
+ {q:'It <strong>meant</strong> a lot to me.',a:['/ment/ — scurt, ca „sent"','/miːnt/ — lung, ca „mean"'],c:0,say:'It meant a lot to me.'},
+ {q:'We <strong>left</strong> at six.',a:['/left/ — se aude clar t la final','/lef/ — t-ul dispare'],c:0,say:'We left at six.'}
+];
+(function(){
+  const host=document.getElementById('pronList');
+  PRON.forEach(item=>{
+    const c=document.createElement('div');c.className='card';
+    c.innerHTML='<p style="font-size:18px">'+item.q+'</p>';
+    const shuffled=item.a.map((t,i)=>({t:t,i:i})).sort(()=>Math.random()-0.5);
+    shuffled.forEach(o=>{
+      const b=document.createElement('button');b.className='opt';b.textContent=o.t;
+      b.onclick=()=>{
+        c.querySelectorAll('.opt').forEach(x=>x.disabled=true);
+        b.classList.add(o.i===item.c?'good':'bad');
+        if(o.i!==item.c)[...c.querySelectorAll('.opt')].forEach((x,k)=>{if(shuffled[k].i===item.c)x.classList.add('good');});
+        speak(item.say,0.8);
+      };
+      c.appendChild(b);
+    });
+    const s=document.createElement('button');s.className='mini';s.textContent='🔊 Ascultă din nou';
+    s.onclick=()=>speak(item.say,0.75);
+    c.appendChild(s);
+    host.appendChild(c);
+  });
+})();
+
+/* ================= P7 GREȘELI ================= */
+const ERR=[
+ {s:'I <u>goed</u> to the bank yesterday.',answer:'went'},
+ {s:'We <u>buyed</u> a new printer.',answer:'bought'},
+ {s:'She <u>telled</u> me the news.',answer:'told'},
+ {s:'He <u>teached</u> us the basics.',answer:'taught'},
+ {s:'I <u>sleeped</u> only four hours.',answer:'slept'},
+ {s:'They <u>bringed</u> the papers.',answer:'brought'},
+ {s:'Did you <u>went</u> to the meeting?',answer:'go'},
+ {s:'She didn\'t <u>came</u> on Monday.',answer:'come'}
+];
+(function(){
+  inputRow(document.getElementById('errList'),ERR,
+    document.getElementById('errCheck'),document.getElementById('errReset'),
+    document.getElementById('errScore'),
+    it=>it.s,
+    (it,val)=>norm(val)===norm(it.answer));
+})();
+(function(){
+  const n=document.createElement('div');n.className='note small';
+  n.innerHTML='Ultimele două sunt altfel: după <strong>did</strong> și <strong>didn\'t</strong>, verbul rămâne la infinitiv. Trecutul e deja în „did".';
+  document.getElementById('errList').after(n);
+})();
+
+/* ================= P8 RUNDĂ RAPIDĂ ================= */
+let speedT=null,speedLeft=60,speedCur=null,hit=0,miss=0,best=0;
+const sInput=document.getElementById('speedInput'),sVerb=document.getElementById('speedVerb'),clock=document.getElementById('clock');
+function nextSpeed(){
+  speedCur=VERBS[Math.floor(Math.random()*VERBS.length)];
+  sVerb.textContent=speedCur.b;
+}
+function stopSpeed(){
+  if(speedT){clearInterval(speedT);speedT=null;}
+  sInput.disabled=true;document.getElementById('speedStart').disabled=false;
+}
+document.getElementById('speedStart').onclick=()=>{
+  hit=0;miss=0;speedLeft=60;
+  document.getElementById('sHit').textContent='0';
+  document.getElementById('sMiss').textContent='0';
+  document.getElementById('speedScore').textContent='';
+  clock.textContent='60';clock.classList.remove('low');
+  sInput.disabled=false;sInput.value='';sInput.focus();
+  document.getElementById('speedStart').disabled=true;
+  nextSpeed();
+  speedT=setInterval(()=>{
+    speedLeft--;clock.textContent=speedLeft;
+    if(speedLeft<=10)clock.classList.add('low');
+    if(speedLeft<=0){
+      stopSpeed();sVerb.textContent='stop';
+      best=Math.max(best,hit);
+      document.getElementById('speedScore').textContent=
+        hit+' corecte în 60 de secunde.'+(best>hit?' (recordul tău: '+best+')':' Ăsta e recordul tău de acum.');
+    }
+  },1000);
+};
+sInput.addEventListener('keydown',e=>{
+  if(e.key!=='Enter'||!speedCur)return;
+  if(isRight(sInput.value,speedCur)){hit++;document.getElementById('sHit').textContent=hit;}
+  else{miss++;document.getElementById('sMiss').textContent=miss;}
+  sInput.value='';nextSpeed();
+});
+
+/* ================= ÎNREGISTRARE ================= */
+function attachRecorder(host,label){
+  const btn=document.createElement('button');
+  btn.className='mini rec';btn.textContent='● '+(label||'Înregistrează');
+  const slot=document.createElement('span');
+  let rec=null,chunks=[],on=false;
+  btn.onclick=async()=>{
+    if(on&&rec){rec.stop();return;}
+    try{
+      const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+      rec=new MediaRecorder(stream);chunks=[];
+      rec.ondataavailable=e=>chunks.push(e.data);
+      rec.onstop=()=>{
+        stream.getTracks().forEach(t=>t.stop());
+        const url=URL.createObjectURL(new Blob(chunks,{type:rec.mimeType||'audio/webm'}));
+        slot.innerHTML='';
+        const a=document.createElement('audio');a.controls=true;a.src=url;slot.appendChild(a);
+        on=false;btn.textContent='● Înregistrează din nou';btn.classList.remove('recording');
+      };
+      rec.start();on=true;btn.textContent='■ Oprește';btn.classList.add('recording');
+    }catch(err){
+      slot.textContent=' Microfonul nu e disponibil. Verifică permisiunea din browser.';
+      slot.className='small muted';
+    }
+  };
+  host.appendChild(btn);host.appendChild(slot);
+}
+
+/* ================= P9 SHADOWING ================= */
+const SHADOW=[
+ {en:'I went to work by metro yesterday.',ro:'Ieri am mers la muncă cu metroul.'},
+ {en:'She said she was busy all morning.',ro:'A spus că a fost ocupată toată dimineața.'},
+ {en:'We had a short meeting after lunch.',ro:'Am avut o ședință scurtă după prânz.'},
+ {en:'I bought a coffee on the way in.',ro:'Am cumpărat o cafea pe drum.'},
+ {en:'He brought his laptop to the office.',ro:'A adus laptopul la birou.'},
+ {en:'They told me about the new project.',ro:'Mi-au spus despre proiectul cel nou.'},
+ {en:'I slept badly and I felt tired.',ro:'Am dormit prost și m-am simțit obosită.'},
+ {en:'We met the client on Tuesday morning.',ro:'Ne-am întâlnit cu clientul marți dimineață.'}
+];
+(function(){
+  const host=document.getElementById('shadowList');
+  SHADOW.forEach((s,i)=>{
+    const c=document.createElement('div');c.className='sent';
+    c.innerHTML='<p>'+(i+1)+'. '+s.en+'</p><div class="ro">'+s.ro+'</div>';
+    const row=document.createElement('div');row.className='rowbtns';
+    const slow=document.createElement('button');slow.className='mini';slow.textContent='🐢 Rar';
+    slow.onclick=()=>speak(s.en,0.6);
+    const norm2=document.createElement('button');norm2.className='mini';norm2.textContent='🔊 Normal';
+    norm2.onclick=()=>speak(s.en,0.95);
+    row.appendChild(slow);row.appendChild(norm2);
+    attachRecorder(row,'Înregistrează');
+    c.appendChild(row);host.appendChild(c);
+  });
+})();
+
+/* ================= P10 JETOANE ================= */
+const TOKSETS=[
+ ['go','have','meet','buy','say','feel'],
+ ['get','make','bring','sleep','tell','leave'],
+ ['do','take','come','see','think','drink'],
+ ['be','keep','read','teach','give','know']
+];
+let tokIdx=0,tokT=null,tokLeft=40;
+function renderTokens(){
+  const host=document.getElementById('tokChips');host.innerHTML='';
+  document.getElementById('tokMsg').textContent='';
+  TOKSETS[tokIdx].forEach(b=>{
+    const v=VERBS.find(x=>x.b===b);
+    const c=document.createElement('button');
+    c.className='chip';c.innerHTML=b+' <span style="color:var(--orange)">→ '+v.p+'</span>';
+    c.onclick=()=>{
+      if(c.classList.contains('done'))return;
+      c.classList.add('done');
+      if([...host.querySelectorAll('.chip:not(.done)')].length===0){
+        stopTokens();
+        document.getElementById('tokMsg').textContent='Toate șase, în '+(40-tokLeft)+' de secunde. Bravo.';
+      }
+    };
+    host.appendChild(c);
+  });
+}
+function stopTokens(){
+  if(tokT){clearInterval(tokT);tokT=null;}
+  const b=document.getElementById('tokStart');if(b)b.disabled=false;
+}
+document.getElementById('tokStart').onclick=()=>{
+  renderTokens();tokLeft=40;
+  const cl=document.getElementById('tokClock');cl.textContent='40';cl.classList.remove('low');
+  document.getElementById('tokStart').disabled=true;
+  tokT=setInterval(()=>{
+    tokLeft--;cl.textContent=tokLeft;
+    if(tokLeft<=10)cl.classList.add('low');
+    if(tokLeft<=0){
+      stopTokens();
+      const left=document.querySelectorAll('#tokChips .chip:not(.done)').length;
+      document.getElementById('tokMsg').textContent=left===0?'Gata!':'Timpul a expirat. Ți-au rămas '+left+'. Mai încearcă o dată.';
+    }
+  },1000);
+};
+document.getElementById('tokNew').onclick=()=>{tokIdx=(tokIdx+1)%TOKSETS.length;stopTokens();renderTokens();document.getElementById('tokClock').textContent='40';};
+renderTokens();
+attachRecorder(document.getElementById('tokRec'),'Înregistrează povestea');
+
+/* ================= P11 CARDURI ================= */
+const CARDS=[
+ {q:'When did you last buy something expensive?',v:'buy → bought'},
+ {q:'When did you last make a mistake at work? What happened?',v:'make → made'},
+ {q:'When did you last meet someone new?',v:'meet → met'},
+ {q:'When did you last sleep badly? Why?',v:'sleep → slept'},
+ {q:'When did you last teach someone something?',v:'teach → taught'},
+ {q:'When did you last leave work early?',v:'leave → left'},
+ {q:'When did you last catch a train or a plane?',v:'catch → caught'},
+ {q:'When did you last feel really proud of yourself?',v:'feel → felt'},
+ {q:'When did you last tell someone good news?',v:'tell → told'},
+ {q:'When did you last think about changing your job?',v:'think → thought'}
+];
+let cardI=-1;
+document.getElementById('cardNext').onclick=()=>{
+  cardI=(cardI+1)%CARDS.length;
+  document.getElementById('cardQ').textContent=CARDS[cardI].q;
+  document.getElementById('cardHint').textContent=CARDS[cardI].v;
+  speak(CARDS[cardI].q,0.85);
+};
+document.getElementById('cardSay').onclick=()=>{
+  if(cardI>=0)speak(CARDS[cardI].q,0.8);
+};
+attachRecorder(document.getElementById('cardRec'),'Înregistrează răspunsul');
+
+/* ================= START ================= */
+show(0);
+document.addEventListener('keydown',e=>{
+  if(document.activeElement&&document.activeElement.tagName==='INPUT')return;
+  if(e.key==='ArrowRight')show(cur+1);
+  if(e.key==='ArrowLeft')show(cur-1);
+});
+</script>
+</body>
+</html>
